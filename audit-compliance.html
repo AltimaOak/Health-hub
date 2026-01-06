@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audit Trail & Compliance · Employee Health Connect</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --bg-soft: #e6f3f4;
+      --primary: #2a9d8f;
+      --primary-soft: #d4f3ed;
+      --primary-deep: #1f766b;
+      --accent: #f4a261;
+      --text-main: #0f172a;
+      --text-muted: #6b7280;
+      --border-soft: #dde5f0;
+      --danger: #e11d48;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e6f3f4, #f4f8fb 40%, #fdfdfd 80%);
+      color: var(--text-main);
+      display: flex;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sidebar {
+      width: 230px;
+      background: #0b1727;
+      color: #e5e7eb;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #3fb7a8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(47, 127, 111, 0.35);
+    }
+
+    .logo span {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .sidebar-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      font-size: 0.84rem;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #e5e7eb;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-item span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-item small {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .nav-item.active {
+      background: rgba(42, 157, 143, 0.18);
+      color: #e0f2fe;
+    }
+
+    .nav-item:hover {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.76rem;
+      color: #9ca3af;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 3px 7px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+      margin-top: 6px;
+      font-size: 0.7rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .main {
+      flex: 1;
+      padding: 16px 18px 18px;
+      overflow: auto;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .top-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .top-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(42, 157, 143, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-deep);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .btn-outline:hover {
+      background: #dbeafe;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.75fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .sidebar {
+        display: none;
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card-header {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-header h2 {
+      font-size: 0.96rem;
+      color: var(--text-main);
+    }
+
+    .card-header span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 8px 0;
+    }
+
+    .filters-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 900px) {
+      .filters-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 600px) {
+      .filters-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .field {
+      margin-bottom: 4px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      margin-bottom: 3px;
+      color: #374151;
+    }
+
+    .input, select, textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+    }
+
+    .input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.15);
+      background: #ffffff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .table-wrapper {
+      margin-top: 6px;
+      max-height: 320px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: #e5f5f5;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 6px 7px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fdfdfd;
+    }
+
+    tbody tr:hover {
+      background: #ecfeff;
+      cursor: pointer;
+    }
+
+    .badge-action {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      gap: 4px;
+    }
+
+    .badge-action.create {
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-action.view {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-action.update {
+      background: #fef9c3;
+      color: #854d0e;
+      border: 1px solid #facc15;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .badge-reviewed {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      gap: 4px;
+    }
+
+    .badge-reviewed.yes {
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-reviewed.no {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    @media (max-width: 720px) {
+      .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .summary-card {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 8px 9px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.78rem;
+    }
+
+    .summary-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .summary-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      gap: 4px;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .pill-warning {
+      background: #fef9c3;
+      color: #854d0e;
+      border-color: #facc15;
+    }
+
+    .chips-row {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    /* Review panel */
+
+    .review-card {
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 10px 10px 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.78rem;
+      margin-top: 6px;
+    }
+
+    .footer-text {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div>
+      <div class="logo">
+        <div class="logo-mark">EH</div>
+        <span>Admin · Compliance</span>
+      </div>
+      <div class="sidebar-label">Navigation</div>
+      <ul class="nav-list">
+        <li class="nav-item active">
+          <span class="label">Audit trail</span>
+          <small>Logs</small>
+        </li>
+        <li class="nav-item">
+          <span class="label">Reports</span>
+          <small>Exports</small>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-footer">
+      Logged in as: <strong>Compliance Admin</strong><br />
+      <span class="badge-pill">
+        <span class="badge-dot"></span>
+        Continuous audit enabled
+      </span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <div class="top-title">Audit trail and compliance</div>
+        <div class="top-subtitle">
+          Track CREATE, VIEW, and UPDATE activity with filters, exports, and a simple review workflow.[web:222][web:231]
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="btn btn-outline" onclick="location.href='index.html'">
+          Home
+        </button>
+        <button class="btn btn-primary" id="export-csv">
+          Export filtered logs (CSV)
+        </button>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- Left: audit table + filters -->
+      <section class="card">
+        <div class="card-header">
+          <h2>Audit trail</h2>
+          <span id="audit-count">0 events</span>
+        </div>
+        <div class="divider"></div>
+
+        <div class="filters-row">
+          <div class="field">
+            <label for="filter_user">User (email or id)</label>
+            <input
+              class="input"
+              type="text"
+              id="filter_user"
+              placeholder="admin@company.com"
+            />
+          </div>
+          <div class="field">
+            <label for="filter_emp">Employee ID</label>
+            <input
+              class="input"
+              type="text"
+              id="filter_emp"
+              placeholder="EMP001"
+            />
+          </div>
+          <div class="field">
+            <label for="filter_action">Action type</label>
+            <select id="filter_action" class="input">
+              <option value="">All</option>
+              <option value="CREATE">CREATE</option>
+              <option value="VIEW">VIEW</option>
+              <option value="UPDATE">UPDATE</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Date range</label>
+            <div style="display:flex;gap:4px;">
+              <input class="input" type="date" id="filter_from" />
+              <input class="input" type="date" id="filter_to" />
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;font-size:0.78rem;color:var(--text-muted);">
+          <span>Click a row to open it for review on the right.</span>
+        </div>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Time</th>
+                <th>User</th>
+                <th>Action</th>
+                <th>Employee</th>
+                <th>IP / Device</th>
+                <th>Purpose</th>
+                <th>Reviewed</th>
+              </tr>
+            </thead>
+            <tbody id="audit-tbody">
+              <!-- Dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="chips-row">
+          <span class="chip">CREATE / VIEW / UPDATE</span>
+          <span class="chip">IP / device info</span>
+          <span class="chip">Purpose of access</span>
+        </div>
+      </section>
+
+      <!-- Right: summaries + review workflow -->
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <h2>Audit summaries</h2>
+            <span>Quick snapshot for recent period.</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-title">Total events</div>
+              <div class="summary-value" id="sum-total">0</div>
+              <div class="summary-sub">In current filter window</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">VIEW actions</div>
+              <div class="summary-value" id="sum-view">0</div>
+              <div class="summary-sub">Read access to records</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">CREATE / UPDATE</div>
+              <div class="summary-value" id="sum-write">0</div>
+              <div class="summary-sub">Changes to data</div>
+            </div>
+          </div>
+
+          <div class="summary-grid" style="margin-top:8px;">
+            <div class="summary-card">
+              <div class="summary-title">Reviewed events</div>
+              <div class="summary-value" id="sum-reviewed">0</div>
+              <div class="summary-sub">Marked as reviewed</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Flagged as suspicious</div>
+              <div class="summary-value" id="sum-flagged">0</div>
+              <div class="summary-sub">Require follow-up</div>
+            </div>
+          </div>
+
+          <div class="chips-row">
+            <span class="chip">Compliance KPIs</span>
+            <span class="chip">Review coverage</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <div class="card-header">
+            <h2>Audit review workflow</h2>
+            <span>Mark events as reviewed and add comments for suspicious activity.[web:224][web:227]</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="tag pill-warning">
+            <span class="tag-dot"></span>
+            Demo-only workflow – in production, link this to your real audit / compliance backend.
+          </div>
+
+          <div class="review-card" id="review-card">
+            <div style="font-weight:600;margin-bottom:4px;">Selected event</div>
+            <div id="review-meta" style="font-size:0.78rem;color:var(--text-muted);">
+              No event selected. Click a row in the table to start review.
+            </div>
+
+            <form id="review-form" style="margin-top:8px;display:none;">
+              <div class="field">
+                <label>Status</label>
+                <select id="review-status" class="input">
+                  <option value="Reviewed - OK">Reviewed - OK</option>
+                  <option value="Reviewed - Suspicious">Reviewed - Suspicious</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="review-notes">Reviewer comments</label>
+                <textarea
+                  id="review-notes"
+                  class="input"
+                  placeholder="Why is this suspicious? Any follow-up actions, tickets, or notifications triggered."
+                ></textarea>
+              </div>
+              <div class="btn-row">
+                <button type="submit" class="btn btn-primary">
+                  Save review
+                </button>
+                <button type="button" class="btn btn-outline" id="clear-review">
+                  Clear
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="footer-text">
+            Full-featured tools export audit logs with filters to CSV/JSON for offline review and regulators.[web:231][web:234]
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer-text">
+      Demo audit & compliance UI – connect to your logging, SIEM, and identity systems to make it production-ready.
+    </div>
+  </main>
+
+  <script>
+    // Demo audit events
+    const auditEvents = [
+      {
+        id: 1,
+        time: "2026-01-06 10:15",
+        user: "doctor@citycare.com",
+        action: "VIEW",
+        emp_id: "EMP001",
+        ip: "192.168.1.10",
+        device: "Chrome · Windows",
+        purpose: "Clinical care",
+        reviewed: false,
+        flagged: false,
+        reviewStatus: "",
+        reviewNotes: ""
+      },
+      {
+        id: 2,
+        time: "2026-01-06 10:18",
+        user: "admin@acme.com",
+        action: "CREATE",
+        emp_id: "EMP002",
+        ip: "192.168.1.20",
+        device: "Edge · Windows",
+        purpose: "Onboarding",
+        reviewed: true,
+        flagged: false,
+        reviewStatus: "Reviewed - OK",
+        reviewNotes: "Standard employee onboarding."
+      },
+      {
+        id: 3,
+        time: "2026-01-06 10:22",
+        user: "doctor@citycare.com",
+        action: "UPDATE",
+        emp_id: "EMP003",
+        ip: "10.0.0.5",
+        device: "Safari · iOS",
+        purpose: "Clinical update",
+        reviewed: false,
+        flagged: true,
+        reviewStatus: "",
+        reviewNotes: ""
+      },
+      {
+        id: 4,
+        time: "2026-01-06 10:30",
+        user: "support@platform.com",
+        action: "VIEW",
+        emp_id: "EMP001",
+        ip: "203.0.113.42",
+        device: "Chrome · Linux",
+        purpose: "Support troubleshooting",
+        reviewed: false,
+        flagged: true,
+        reviewStatus: "",
+        reviewNotes: ""
+      }
+    ];
+
+    const auditTbody = document.getElementById("audit-tbody");
+    const auditCountLabel = document.getElementById("audit-count");
+
+    const filterUser = document.getElementById("filter_user");
+    const filterEmp = document.getElementById("filter_emp");
+    const filterAction = document.getElementById("filter_action");
+    const filterFrom = document.getElementById("filter_from");
+    const filterTo = document.getElementById("filter_to");
+
+    const sumTotal = document.getElementById("sum-total");
+    const sumView = document.getElementById("sum-view");
+    const sumWrite = document.getElementById("sum-write");
+    const sumReviewed = document.getElementById("sum-reviewed");
+    const sumFlagged = document.getElementById("sum-flagged");
+
+    let selectedEventId = null;
+
+    function renderAudit() {
+      const userVal = filterUser.value.trim().toLowerCase();
+      const empVal = filterEmp.value.trim().toLowerCase();
+      const actionVal = filterAction.value;
+      const fromDate = filterFrom.value;
+      const toDate = filterTo.value;
+
+      auditTbody.innerHTML = "";
+
+      let total = 0;
+      let viewCount = 0;
+      let writeCount = 0;
+      let reviewedCount = 0;
+      let flaggedCount = 0;
+
+      const filtered = auditEvents.filter((e) => {
+        const matchesUser =
+          !userVal || e.user.toLowerCase().includes(userVal);
+        const matchesEmp =
+          !empVal || e.emp_id.toLowerCase().includes(empVal);
+        const matchesAction =
+          !actionVal || e.action === actionVal;
+
+        const dateOnly = e.time.slice(0, 10); // YYYY-MM-DD
+        const matchesFrom =
+          !fromDate || dateOnly >= fromDate;
+        const matchesTo =
+          !toDate || dateOnly <= toDate;
+
+        return (
+          matchesUser && matchesEmp && matchesAction && matchesFrom && matchesTo
+        );
+      });
+
+      filtered.forEach((e, index) => {
+        total++;
+        if (e.action === "VIEW") viewCount++;
+        if (e.action === "CREATE" || e.action === "UPDATE") writeCount++;
+        if (e.reviewed) reviewedCount++;
+        if (e.flagged) flaggedCount++;
+
+        const tr = document.createElement("tr");
+        const actionClass =
+          e.action === "CREATE"
+            ? "create"
+            : e.action === "UPDATE"
+            ? "update"
+            : "view";
+        const reviewedClass = e.reviewed ? "yes" : "no";
+
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${e.time}</td>
+          <td>${e.user}</td>
+          <td>
+            <span class="badge-action ${actionClass}">
+              <span class="status-dot"></span>${e.action}
+            </span>
+          </td>
+          <td>${e.emp_id}</td>
+          <td>${e.ip} / ${e.device}</td>
+          <td>${e.purpose}</td>
+          <td>
+            <span class="badge-reviewed ${reviewedClass}">
+              <span class="status-dot"></span>${e.reviewed ? "Yes" : "No"}
+            </span>
+          </td>
+        `;
+
+        tr.addEventListener("click", () => selectEvent(e.id));
+        auditTbody.appendChild(tr);
+      });
+
+      auditCountLabel.textContent =
+        filtered.length === 1 ? "1 event" : filtered.length + " events";
+
+      sumTotal.textContent = total;
+      sumView.textContent = viewCount;
+      sumWrite.textContent = writeCount;
+      sumReviewed.textContent = reviewedCount;
+      sumFlagged.textContent = flaggedCount;
+
+      if (
+        selectedEventId &&
+        !filtered.some((e) => e.id === selectedEventId)
+      ) {
+        clearReviewSelection();
+      }
+    }
+
+    filterUser.addEventListener("input", renderAudit);
+    filterEmp.addEventListener("input", renderAudit);
+    filterAction.addEventListener("change", renderAudit);
+    filterFrom.addEventListener("change", renderAudit);
+    filterTo.addEventListener("change", renderAudit);
+
+    // Review workflow
+    const reviewMeta = document.getElementById("review-meta");
+    const reviewForm = document.getElementById("review-form");
+    const reviewStatus = document.getElementById("review-status");
+    const reviewNotes = document.getElementById("review-notes");
+    const clearReviewBtn = document.getElementById("clear-review");
+
+    function selectEvent(id) {
+      selectedEventId = id;
+      const e = auditEvents.find((x) => x.id === id);
+      if (!e) return;
+
+      reviewMeta.textContent =
+        e.time +
+        " · " +
+        e.user +
+        " · " +
+        e.action +
+        " · Employee " +
+        e.emp_id +
+        " · " +
+        e.ip +
+        " (" +
+        e.purpose +
+        ")";
+      reviewForm.style.display = "block";
+
+      if (e.reviewStatus) {
+        reviewStatus.value = e.reviewStatus;
+      } else {
+        reviewStatus.value = "Reviewed - OK";
+      }
+      reviewNotes.value = e.reviewNotes || "";
+    }
+
+    function clearReviewSelection() {
+      selectedEventId = null;
+      reviewMeta.textContent =
+        "No event selected. Click a row in the table to start review.";
+      reviewForm.style.display = "none";
+      reviewNotes.value = "";
+    }
+
+    reviewForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (!selectedEventId) return;
+
+      const e = auditEvents.find((x) => x.id === selectedEventId);
+      if (!e) return;
+
+      e.reviewed = true;
+      e.reviewStatus = reviewStatus.value;
+      e.reviewNotes = reviewNotes.value.trim();
+      if (reviewStatus.value === "Reviewed - Suspicious") {
+        e.flagged = true;
+      }
+
+      renderAudit();
+    });
+
+    clearReviewBtn.addEventListener("click", function () {
+      clearReviewSelection();
+    });
+
+    // Export filtered logs to CSV (client-side demo)
+    document.getElementById("export-csv").addEventListener("click", function () {
+      const userVal = filterUser.value.trim().toLowerCase();
+      const empVal = filterEmp.value.trim().toLowerCase();
+      const actionVal = filterAction.value;
+      const fromDate = filterFrom.value;
+      const toDate = filterTo.value;
+
+      const filtered = auditEvents.filter((e) => {
+        const matchesUser =
+          !userVal || e.user.toLowerCase().includes(userVal);
+        const matchesEmp =
+          !empVal || e.emp_id.toLowerCase().includes(empVal);
+        const matchesAction =
+          !actionVal || e.action === actionVal;
+        const dateOnly = e.time.slice(0, 10);
+        const matchesFrom =
+          !fromDate || dateOnly >= fromDate;
+        const matchesTo =
+          !toDate || dateOnly <= toDate;
+
+        return (
+          matchesUser && matchesEmp && matchesAction && matchesFrom && matchesTo
+        );
+      });
+
+      if (filtered.length === 0) {
+        alert("No events to export for current filters.");
+        return;
+      }
+
+      const header = [
+        "Time",
+        "User",
+        "Action",
+        "EmployeeID",
+        "IP",
+        "Device",
+        "Purpose",
+        "Reviewed",
+        "Flagged",
+        "ReviewStatus",
+        "ReviewNotes"
+      ];
+
+      const rows = filtered.map((e) => [
+        e.time,
+        e.user,
+        e.action,
+        e.emp_id,
+        e.ip,
+        e.device,
+        e.purpose,
+        e.reviewed ? "Yes" : "No",
+        e.flagged ? "Yes" : "No",
+        e.reviewStatus || "",
+        (e.reviewNotes || "").replace(/"/g, '""')
+      ]);
+
+      const csvLines = [header.join(",")].concat(
+        rows.map((r) =>
+          r
+            .map((val) => `"${String(val)}"`)
+            .join(",")
+        )
+      );
+
+      const csvContent =
+        "data:text/csv;charset=utf-8," + csvLines.join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      const today = new Date().toISOString().slice(0, 10);
+      link.setAttribute("download", "audit_logs_" + today + ".csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+
+    // Initial render
+    renderAudit();
+  </script>
+</body>
+</html>

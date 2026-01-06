@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doctor Portal · Advanced · Employee Health Connect</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --bg-soft: #e6f3f4;
+      --primary: #2a9d8f;
+      --primary-soft: #d4f3ed;
+      --primary-deep: #1f766b;
+      --accent: #f4a261;
+      --text-main: #0f172a;
+      --text-muted: #6b7280;
+      --border-soft: #dde5f0;
+      --danger: #e11d48;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e6f3f4, #f4f8fb 40%, #fdfdfd 80%);
+      color: var(--text-main);
+      display: flex;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sidebar {
+      width: 230px;
+      background: #0b1727;
+      color: #e5e7eb;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #3fb7a8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(47, 127, 111, 0.35);
+    }
+
+    .logo span {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .sidebar-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      font-size: 0.84rem;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #e5e7eb;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-item span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-item small {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .nav-item.active {
+      background: rgba(42, 157, 143, 0.18);
+      color: #e0f2fe;
+    }
+
+    .nav-item:hover {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.76rem;
+      color: #9ca3af;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 3px 7px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+      margin-top: 6px;
+      font-size: 0.7rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .main {
+      flex: 1;
+      padding: 16px 18px 18px;
+      overflow: auto;
+      position: relative;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .top-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .top-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(42, 157, 143, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-deep);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .btn-outline:hover {
+      background: #dbeafe;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .sidebar {
+        display: none;
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card-header {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-header h2 {
+      font-size: 0.96rem;
+      color: var(--text-main);
+    }
+
+    .card-header span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 8px 0;
+    }
+
+    /* Forms / tables common */
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 640px) {
+      .two-cols {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .field {
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      margin-bottom: 3px;
+      color: #374151;
+    }
+
+    .input, select, textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+    }
+
+    .input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.15);
+      background: #ffffff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .error-text {
+      display: none;
+      margin-top: 4px;
+      font-size: 0.76rem;
+      color: var(--danger);
+    }
+
+    .table-wrapper {
+      margin-top: 6px;
+      max-height: 230px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: #e5f5f5;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 6px 7px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fdfdfd;
+    }
+
+    tbody tr:hover {
+      background: #ecfeff;
+      cursor: pointer;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      gap: 4px;
+    }
+
+    .badge-status.current {
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-status.high {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .chips-row {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .summary-card {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 8px 9px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.78rem;
+    }
+
+    .summary-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .summary-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .pill-warning {
+      background: #fef9c3;
+      color: #854d0e;
+      border-color: #facc15;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      gap: 4px;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    /* Vitals high-BP highlighting */
+
+    .row-high-bp {
+      background: #fee2e2 !important;
+    }
+
+    /* Patient side panel & timeline */
+
+    .patient-panel {
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 320px;
+      max-width: 90vw;
+      background: #ffffff;
+      border-left: 1px solid var(--border-soft);
+      box-shadow: -10px 0 30px rgba(15, 23, 42, 0.25);
+      padding: 14px 14px 12px;
+      transform: translateX(100%);
+      transition: transform 0.22s ease-out;
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .patient-panel.open {
+      transform: translateX(0%);
+    }
+
+    .patient-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .patient-name {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .patient-meta {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .close-btn {
+      border: none;
+      background: #f3f4f6;
+      border-radius: 999px;
+      padding: 4px 8px;
+      font-size: 0.76rem;
+      cursor: pointer;
+    }
+
+    .badge-pill-small {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border-radius: 999px;
+      padding: 2px 6px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-size: 0.68rem;
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-top: 4px;
+      margin-bottom: 2px;
+      color: #111827;
+    }
+
+    .small-text {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    .timeline {
+      margin-top: 4px;
+      padding-left: 10px;
+      border-left: 2px solid #e5e7eb;
+      max-height: 180px;
+      overflow-y: auto;
+    }
+
+    .timeline-item {
+      margin-bottom: 8px;
+      position: relative;
+      padding-left: 10px;
+    }
+
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: -6px;
+      top: 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #2a9d8f;
+    }
+
+    .timeline-date {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    .timeline-label {
+      font-size: 0.8rem;
+      color: #0f172a;
+    }
+
+    .footer-text {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div>
+      <div class="logo">
+        <div class="logo-mark">EH</div>
+        <span>Doctor Portal</span>
+      </div>
+      <div class="sidebar-label">Navigation</div>
+      <ul class="nav-list">
+        <li class="nav-item active">
+          <span class="label">Patient list</span>
+          <small>Vitals & notes</small>
+        </li>
+        <li class="nav-item">
+          <span class="label">Timeline view</span>
+          <small>History</small>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-footer">
+      Logged in as: <strong>Dr. A. Sharma</strong><br />
+      <span class="badge-pill">
+        <span class="badge-dot"></span>
+        On duty · City Care Hospital
+      </span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <div class="top-title">For Doctors · Advanced view</div>
+        <div class="top-subtitle">
+          Quick vitals, structured diagnoses (ICD), and a timeline view of visits and health records.[web:64][web:210]
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="btn btn-outline" onclick="location.href='index.html'">
+          Home
+        </button>
+        <button class="btn btn-primary">
+          Today’s schedule
+        </button>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- Left: Patient list + vitals + structured record -->
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <h2>Patient list & vitals</h2>
+            <span id="patient-count">0 patients assigned</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="two-cols">
+            <div class="field">
+              <label for="patient_search">Search patients</label>
+              <input
+                class="input"
+                type="text"
+                id="patient_search"
+                placeholder="Search by name, employee ID, or company..."
+              />
+            </div>
+            <div class="field">
+              <label for="acuity_filter">Filter</label>
+              <select id="acuity_filter" class="input">
+                <option value="">All</option>
+                <option value="HighBP">High BP</option>
+                <option value="FollowUp">Follow-up required</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Employee</th>
+                  <th>Company</th>
+                  <th>BP</th>
+                  <th>HR</th>
+                  <th>BMI</th>
+                  <th>Status</th>
+                  <th>Last visit</th>
+                </tr>
+              </thead>
+              <tbody id="patient-tbody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="chips-row">
+            <span class="chip">Vitals: BP / HR / BMI</span>
+            <span class="chip">Highlight high BP in red</span>
+            <span class="chip">Follow-up required flags</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <div class="card-header">
+            <h2>Health record (structured)</h2>
+            <span>ICD code, diagnosis, plan, and vitals for the current encounter.[web:210][web:214]</span>
+          </div>
+          <div class="divider"></div>
+
+          <form id="record-form">
+            <div class="two-cols">
+              <div class="field">
+                <label for="record_emp_id">Employee ID</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="record_emp_id"
+                  name="record_emp_id"
+                  placeholder="EMP001"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="record_icd">ICD code</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="record_icd"
+                  name="record_icd"
+                  placeholder="I10 (Essential hypertension)"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="record_diagnosis">Diagnosis</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="record_diagnosis"
+                  name="record_diagnosis"
+                  placeholder="Hypertension – uncontrolled"
+                />
+              </div>
+              <div class="field">
+                <label for="record_plan">Plan</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="record_plan"
+                  name="record_plan"
+                  placeholder="Adjust medication; follow-up in 3 months"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="record_bp">BP (mmHg)</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="record_bp"
+                  name="record_bp"
+                  placeholder="130/85"
+                />
+              </div>
+              <div class="field">
+                <label for="record_hr">Heart rate (bpm)</label>
+                <input
+                  class="input"
+                  type="number"
+                  id="record_hr"
+                  name="record_hr"
+                  placeholder="72"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="record_bmi">BMI</label>
+                <input
+                  class="input"
+                  type="number"
+                  step="0.1"
+                  id="record_bmi"
+                  name="record_bmi"
+                  placeholder="24.5"
+                />
+              </div>
+              <div class="field">
+                <label for="record_type">Record type</label>
+                <select id="record_type" name="record_type" class="input">
+                  <option value="Clinical note">Clinical note</option>
+                  <option value="Lab result">Lab result</option>
+                  <option value="Prescription">Prescription</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="record_summary">Summary</label>
+              <textarea
+                id="record_summary"
+                name="record_summary"
+                placeholder="Chief complaint, findings, and detailed plan."
+              ></textarea>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary">
+                Save record
+              </button>
+              <button type="button" class="btn btn-outline" id="clear-record-form">
+                Clear form
+              </button>
+            </div>
+
+            <div id="record-error" class="error-text">
+              Employee ID and at least one field (ICD, diagnosis, or summary) are required.
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- Right: Recent records + timeline summary -->
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <h2>Recent health records</h2>
+            <span>Structured records for all patients.</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Employee</th>
+                  <th>ICD</th>
+                  <th>Diagnosis</th>
+                  <th>Type</th>
+                  <th>Created at</th>
+                </tr>
+              </thead>
+              <tbody id="record-tbody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-title">Records created today</div>
+              <div class="summary-value" id="summary-records-today">0</div>
+              <div class="summary-sub">Clinical notes, labs, prescriptions</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Patients with active records</div>
+              <div class="summary-value" id="summary-record-patients">0</div>
+              <div class="summary-sub">Distinct employees</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <div class="card-header">
+            <h2>Patient timeline (demo)</h2>
+            <span>Merges visits and records chronologically for the selected employee.[web:209][web:211]</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="tag pill-warning">
+            <span class="tag-dot"></span>
+            Demo-only timeline – replace with data from your visit & record services.
+          </div>
+
+          <div class="timeline" id="timeline">
+            <!-- Populated when patient is selected -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer-text">
+      Demo advanced doctor UI – add real data and consent checks before showing patient details.
+    </div>
+
+    <!-- Patient detail side panel -->
+    <aside class="patient-panel" id="patient-panel">
+      <div class="patient-panel-header">
+        <div>
+          <div class="patient-name" id="panel-name">Patient name</div>
+          <div class="patient-meta" id="panel-meta">EMP000 · Company · Hospital</div>
+        </div>
+        <button class="close-btn" id="panel-close">Close</button>
+      </div>
+
+      <div>
+        <div class="section-title">Allergies & medications</div>
+        <div class="small-text" id="panel-allergies">
+          Allergies: –
+        </div>
+        <div class="small-text" id="panel-meds">
+          Medications: –
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Last 3 visits</div>
+        <ul id="panel-visits" class="small-text" style="padding-left:16px;margin-top:2px;"></ul>
+      </div>
+
+      <div>
+        <div class="section-title">Last lab summary</div>
+        <div class="small-text" id="panel-labs">
+          –
+        </div>
+      </div>
+
+      <div>
+        <div class="section-title">Mini timeline</div>
+        <div class="timeline" id="panel-timeline">
+          <!-- Short timeline for this patient -->
+        </div>
+      </div>
+
+      <div class="chips-row">
+        <span class="badge-pill-small">
+          <span class="status-dot"></span>
+          Active
+        </span>
+        <span class="badge-pill-small">Patient card view</span>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    // Demo patients with vitals
+    const patients = [
+      {
+        emp_id: "EMP001",
+        name: "John Doe",
+        company: "Acme Corp",
+        hospital: "City Care Hospital",
+        bp: "150/95",
+        hr: 88,
+        bmi: 29.5,
+        status: "Follow-up required",
+        last_visit: "2026-01-05",
+        allergies: "Penicillin",
+        meds: "Amlodipine 5 mg OD",
+        lab_summary: "Elevated BP, borderline LDL"
+      },
+      {
+        emp_id: "EMP002",
+        name: "Ananya Rao",
+        company: "GreenTech Ltd",
+        hospital: "City Care Hospital",
+        bp: "122/80",
+        hr: 72,
+        bmi: 23.2,
+        status: "Stable",
+        last_visit: "2025-12-18",
+        allergies: "None known",
+        meds: "None",
+        lab_summary: "Within normal range"
+      },
+      {
+        emp_id: "EMP003",
+        name: "Ravi Singh",
+        company: "Metro Logistics",
+        hospital: "City Care Hospital",
+        bp: "138/92",
+        hr: 90,
+        bmi: 27.1,
+        status: "Follow-up required",
+        last_visit: "2026-01-03",
+        allergies: "NSAIDs",
+        meds: "Losartan 50 mg OD",
+        lab_summary: "Mildly elevated BP; HbA1c normal"
+      }
+    ];
+
+    const patientTbody = document.getElementById("patient-tbody");
+    const patientCountLabel = document.getElementById("patient-count");
+    const patientSearch = document.getElementById("patient_search");
+    const acuityFilter = document.getElementById("acuity_filter");
+
+    function isHighBP(bp) {
+      const parts = bp.split("/");
+      if (parts.length !== 2) return false;
+      const systolic = parseInt(parts[0], 10);
+      const diastolic = parseInt(parts[1], 10);
+      return systolic >= 140 || diastolic >= 90;
+    }
+
+    function renderPatients() {
+      const search = patientSearch.value.trim().toLowerCase();
+      const filter = acuityFilter.value;
+      patientTbody.innerHTML = "";
+
+      const filtered = patients.filter((p) => {
+        const matchesSearch =
+          !search ||
+          p.name.toLowerCase().includes(search) ||
+          p.emp_id.toLowerCase().includes(search) ||
+          p.company.toLowerCase().includes(search);
+
+        const highBp = isHighBP(p.bp);
+        const followUp = p.status.toLowerCase().includes("follow-up");
+
+        const matchesFilter =
+          !filter ||
+          (filter === "HighBP" && highBp) ||
+          (filter === "FollowUp" && followUp);
+
+        return matchesSearch && matchesFilter;
+      });
+
+      filtered.forEach((p, index) => {
+        const tr = document.createElement("tr");
+        const highBp = isHighBP(p.bp);
+
+        if (highBp) {
+          tr.classList.add("row-high-bp");
+        }
+
+        const statusClass = highBp ? "high" : "current";
+
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${p.emp_id} – ${p.name}</td>
+          <td>${p.company}</td>
+          <td>${p.bp}</td>
+          <td>${p.hr}</td>
+          <td>${p.bmi}</td>
+          <td>
+            <span class="badge-status ${statusClass}">
+              <span class="status-dot"></span>${
+                highBp ? "High BP" : p.status
+              }
+            </span>
+          </td>
+          <td>${p.last_visit}</td>
+        `;
+
+        tr.addEventListener("click", () => openPatientPanel(p));
+        patientTbody.appendChild(tr);
+      });
+
+      patientCountLabel.textContent =
+        patients.length === 1
+          ? "1 patient assigned"
+          : patients.length + " patients assigned";
+
+      // Build global timeline using all patients + records
+      buildTimeline();
+    }
+
+    patientSearch.addEventListener("input", renderPatients);
+    acuityFilter.addEventListener("change", renderPatients);
+
+    // Structured records + simple summaries
+    const recordForm = document.getElementById("record-form");
+    const recordError = document.getElementById("record-error");
+    const clearRecordFormBtn = document.getElementById("clear-record-form");
+    const recordTbody = document.getElementById("record-tbody");
+    const summaryRecordsToday = document.getElementById("summary-records-today");
+    const summaryRecordPatients = document.getElementById("summary-record-patients");
+
+    let records = [];
+
+    function renderRecords() {
+      recordTbody.innerHTML = "";
+
+      const todayStr = new Date().toISOString().slice(0, 10);
+      let todayCount = 0;
+      const patientSet = new Set();
+
+      records.forEach((r, index) => {
+        if (r.created_at.startsWith(todayStr)) todayCount++;
+        patientSet.add(r.emp_id);
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${r.emp_id}</td>
+          <td>${r.icd}</td>
+          <td>${r.diagnosis}</td>
+          <td>${r.type}</td>
+          <td>${r.created_at}</td>
+        `;
+        recordTbody.appendChild(tr);
+      });
+
+      summaryRecordsToday.textContent = todayCount;
+      summaryRecordPatients.textContent = patientSet.size;
+      buildTimeline();
+    }
+
+    recordForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      recordError.style.display = "none";
+
+      const emp_id = document.getElementById("record_emp_id").value.trim();
+      const icd = document.getElementById("record_icd").value.trim();
+      const diagnosis = document
+        .getElementById("record_diagnosis")
+        .value.trim();
+      const plan = document.getElementById("record_plan").value.trim();
+      const bp = document.getElementById("record_bp").value.trim();
+      const hr = document.getElementById("record_hr").value.trim();
+      const bmi = document.getElementById("record_bmi").value.trim();
+      const type = document.getElementById("record_type").value;
+      const summary = document.getElementById("record_summary").value.trim();
+
+      if (!emp_id || (!icd && !diagnosis && !summary)) {
+        recordError.style.display = "block";
+        return;
+      }
+
+      const created_at = new Date().toISOString().slice(0, 16).replace("T", " ");
+
+      records.push({
+        emp_id,
+        icd: icd || "-",
+        diagnosis: diagnosis || "-",
+        plan: plan || "-",
+        bp: bp || "-",
+        hr: hr || "-",
+        bmi: bmi || "-",
+        type,
+        summary: summary || "-",
+        created_at
+      });
+
+      recordForm.reset();
+      renderRecords();
+    });
+
+    clearRecordFormBtn.addEventListener("click", function () {
+      recordForm.reset();
+      recordError.style.display = "none";
+    });
+
+    // Patient side panel and mini timeline
+    const patientPanel = document.getElementById("patient-panel");
+    const panelClose = document.getElementById("panel-close");
+    const panelName = document.getElementById("panel-name");
+    const panelMeta = document.getElementById("panel-meta");
+    const panelAllergies = document.getElementById("panel-allergies");
+    const panelMeds = document.getElementById("panel-meds");
+    const panelLabs = document.getElementById("panel-labs");
+    const panelVisits = document.getElementById("panel-visits");
+    const panelTimeline = document.getElementById("panel-timeline");
+
+    function openPatientPanel(patient) {
+      panelName.textContent = patient.name;
+      panelMeta.textContent =
+        patient.emp_id + " · " + patient.company + " · " + patient.hospital;
+      panelAllergies.textContent = "Allergies: " + (patient.allergies || "–");
+      panelMeds.textContent = "Medications: " + (patient.meds || "–");
+      panelLabs.textContent = patient.lab_summary || "–";
+
+      // Demo: last 3 visits from a simple array
+      const visits = [
+        { date: "2026-01-05", reason: "Annual checkup" },
+        { date: "2025-10-02", reason: "BP follow-up" },
+        { date: "2025-06-20", reason: "General consultation" }
+      ];
+
+      panelVisits.innerHTML = "";
+      visits.slice(0, 3).forEach((v) => {
+        const li = document.createElement("li");
+        li.textContent = v.date + " – " + v.reason;
+        panelVisits.appendChild(li);
+      });
+
+      // Mini timeline for this patient (merge demo visits + their records)
+      panelTimeline.innerHTML = "";
+
+      const patientRecords = records
+        .filter((r) => r.emp_id === patient.emp_id)
+        .map((r) => ({
+          date: r.created_at.slice(0, 10),
+          label: r.type + " · " + (r.diagnosis || r.icd || "")
+        }));
+
+      const combined = [
+        ...visits.map((v) => ({
+          date: v.date,
+          label: "Visit · " + v.reason
+        })),
+        ...patientRecords
+      ].sort((a, b) => (a.date > b.date ? -1 : 1)); // latest first
+
+      combined.forEach((item) => {
+        const div = document.createElement("div");
+        div.className = "timeline-item";
+        div.innerHTML = `
+          <div class="timeline-date">${item.date}</div>
+          <div class="timeline-label">${item.label}</div>
+        `;
+        panelTimeline.appendChild(div);
+      });
+
+      patientPanel.classList.add("open");
+    }
+
+    panelClose.addEventListener("click", () => {
+      patientPanel.classList.remove("open");
+    });
+
+    // Global timeline (right card)
+    const timelineEl = document.getElementById("timeline");
+
+    function buildTimeline() {
+      timelineEl.innerHTML = "";
+      const events = [];
+
+      // Demo visits from patients
+      patients.forEach((p) => {
+        events.push({
+          date: p.last_visit,
+          label: p.emp_id + " – Visit · " + p.status
+        });
+      });
+
+      // Demo records
+      records.forEach((r) => {
+        events.push({
+          date: r.created_at.slice(0, 10),
+          label: r.emp_id + " – " + r.type + " (" + (r.icd || "-") + ")"
+        });
+      });
+
+      events.sort((a, b) => (a.date > b.date ? -1 : 1));
+
+      events.forEach((e) => {
+        const item = document.createElement("div");
+        item.className = "timeline-item";
+        item.innerHTML = `
+          <div class="timeline-date">${e.date}</div>
+          <div class="timeline-label">${e.label}</div>
+        `;
+        timelineEl.appendChild(item);
+      });
+    }
+
+    // Initial render
+    renderPatients();
+    renderRecords();
+  </script>
+</body>
+</html>

@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Company Portal · Employee Health Connect</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --bg-soft: #e6f3f4;
+      --primary: #2a9d8f;
+      --primary-soft: #d4f3ed;
+      --primary-deep: #1f766b;
+      --accent: #f4a261;
+      --text-main: #0f172a;
+      --text-muted: #6b7280;
+      --border-soft: #dde5f0;
+      --danger: #e11d48;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e6f3f4, #f4f8fb 40%, #fdfdfd 80%);
+      color: var(--text-main);
+      display: flex;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sidebar {
+      width: 230px;
+      background: #0b1727;
+      color: #e5e7eb;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #3fb7a8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(47, 127, 111, 0.35);
+    }
+
+    .logo span {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .sidebar-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      font-size: 0.84rem;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #e5e7eb;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-item span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-item small {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .nav-item.active {
+      background: rgba(42, 157, 143, 0.18);
+      color: #e0f2fe;
+    }
+
+    .nav-item:hover {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.76rem;
+      color: #9ca3af;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 3px 7px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+      margin-top: 6px;
+      font-size: 0.7rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .main {
+      flex: 1;
+      padding: 16px 18px 18px;
+      overflow: auto;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .top-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .top-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(42, 157, 143, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-deep);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .btn-outline:hover {
+      background: #dbeafe;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .sidebar {
+        display: none;
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card-header {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-header h2 {
+      font-size: 0.96rem;
+      color: var(--text-main);
+    }
+
+    .card-header span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 8px 0;
+    }
+
+    /* Employee registry */
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 640px) {
+      .two-cols {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .field {
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      margin-bottom: 3px;
+      color: #374151;
+    }
+
+    .input, select {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+    }
+
+    .input:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.15);
+      background: #ffffff;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .error-text {
+      display: none;
+      margin-top: 4px;
+      font-size: 0.76rem;
+      color: var(--danger);
+    }
+
+    .table-wrapper {
+      margin-top: 6px;
+      max-height: 260px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: #e5f5f5;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 6px 7px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fdfdfd;
+    }
+
+    tbody tr:hover {
+      background: #ecfeff;
+    }
+
+    .badge-role {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      gap: 4px;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .pill-warning {
+      background: #fef9c3;
+      color: #854d0e;
+      border-color: #facc15;
+    }
+
+    /* Right column cards */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .summary-card {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 8px 9px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.78rem;
+    }
+
+    .summary-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .summary-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chips-row {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .consent-table-wrapper {
+      max-height: 180px;
+      overflow: auto;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+      margin-top: 6px;
+    }
+
+    .badge-consent {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+    }
+
+    .badge-consent.granted {
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-consent.pending {
+      background: #fef9c3;
+      color: #854d0e;
+      border: 1px solid #facc15;
+    }
+
+    .badge-consent.revoked {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      margin-right: 4px;
+      background: currentColor;
+    }
+
+    .footer-text {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div>
+      <div class="logo">
+        <div class="logo-mark">EH</div>
+        <span>Company Portal</span>
+      </div>
+      <div class="sidebar-label">Navigation</div>
+      <ul class="nav-list">
+        <li class="nav-item active">
+          <span class="label">Employee registry</span>
+          <small>View & add</small>
+        </li>
+        <li class="nav-item">
+          <span class="label">Health summaries</span>
+          <small>Overview</small>
+        </li>
+        <li class="nav-item">
+          <span class="label">Consent dashboard</span>
+          <small>Hospitals</small>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-footer">
+      Logged in as: <strong>Company Admin</strong><br />
+      <span class="badge-pill">
+        <span class="badge-dot"></span>
+        Wellness program active
+      </span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <div class="top-title">For Companies</div>
+        <div class="top-subtitle">
+          Register employees, assign partner hospitals, and monitor wellness with data privacy and consent in mind.
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="btn btn-outline" onclick="location.href='index.html'">
+          Home
+        </button>
+        <button class="btn btn-primary">
+          Export report
+        </button>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- Left: Employee registry -->
+      <section class="card">
+        <div class="card-header">
+          <h2>Employee registry</h2>
+          <span id="employee-count">0 employees</span>
+        </div>
+        <div class="divider"></div>
+
+        <form id="employee-form">
+          <div class="field">
+            <label for="emp_id">Employee ID</label>
+            <input
+              class="input"
+              type="text"
+              id="emp_id"
+              name="emp_id"
+              placeholder="EMP001"
+              required
+            />
+          </div>
+
+          <div class="two-cols">
+            <div class="field">
+              <label for="name">Full name</label>
+              <input
+                class="input"
+                type="text"
+                id="name"
+                name="name"
+                placeholder="John Doe"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="department">Department</label>
+              <input
+                class="input"
+                type="text"
+                id="department"
+                name="department"
+                placeholder="IT / HR / Finance"
+              />
+            </div>
+          </div>
+
+          <div class="two-cols">
+            <div class="field">
+              <label for="partner_hospital">Partner hospital</label>
+              <input
+                class="input"
+                type="text"
+                id="partner_hospital"
+                name="partner_hospital"
+                placeholder="City Care Hospital"
+              />
+            </div>
+            <div class="field">
+              <label for="status">Status</label>
+              <select id="status" name="status" class="input">
+                <option value="Active">Active</option>
+                <option value="On Leave">On Leave</option>
+                <option value="Inactive">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="two-cols">
+            <div class="field">
+              <label for="email">Email</label>
+              <input
+                class="input"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="john.doe@example.com"
+              />
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input
+                class="input"
+                type="tel"
+                id="phone"
+                name="phone"
+                placeholder="+91 98765 43210"
+              />
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">
+              Add employee
+            </button>
+            <button type="button" class="btn btn-outline" id="clear-form">
+              Clear form
+            </button>
+          </div>
+
+          <div id="form-error" class="error-text">
+            Please enter at least Employee ID and Name.
+          </div>
+        </form>
+
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Emp ID</th>
+                <th>Name</th>
+                <th>Dept</th>
+                <th>Partner hospital</th>
+                <th>Status</th>
+                <th>Email</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody id="employee-tbody">
+              <!-- Dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Right: Health summaries & consent dashboard -->
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <h2>Health summaries</h2>
+            <span>High-level view of employee wellness indicators.</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-title">Employees with recent checkup</div>
+              <div class="summary-value" id="summary-checkups">0</div>
+              <div class="summary-sub">Last 12 months</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Employees with active consent</div>
+              <div class="summary-value" id="summary-consent">0</div>
+              <div class="summary-sub">For at least one hospital</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Partner hospitals</div>
+              <div class="summary-value" id="summary-hospitals">0</div>
+              <div class="summary-sub">Assigned across employees</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Overall wellness index</div>
+              <div class="summary-value">–</div>
+              <div class="summary-sub">
+                Placeholder for your actual analytics / scoring
+              </div>
+            </div>
+          </div>
+
+          <div class="chips-row">
+            <span class="chip">Employee registry</span>
+            <span class="chip">Health summaries</span>
+            <span class="chip">Consent dashboard</span>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <div class="card-header">
+            <h2>Consent dashboard</h2>
+            <span>Track who has granted access to which hospital.</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="tag pill-warning">
+            <span class="tag-dot"></span>
+            Demo-only consent view (static data)
+          </div>
+
+          <div class="consent-table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Employee</th>
+                  <th>Hospital</th>
+                  <th>Consent status</th>
+                  <th>Valid till</th>
+                </tr>
+              </thead>
+              <tbody id="consent-tbody">
+                <tr>
+                  <td>EMP001 – John Doe</td>
+                  <td>City Care Hospital</td>
+                  <td>
+                    <span class="badge-consent granted">
+                      <span class="status-dot"></span>
+                      Granted
+                    </span>
+                  </td>
+                  <td>31 Dec 2026</td>
+                </tr>
+                <tr>
+                  <td>EMP002 – Ananya Rao</td>
+                  <td>GreenLife Clinic</td>
+                  <td>
+                    <span class="badge-consent pending">
+                      <span class="status-dot"></span>
+                      Pending
+                    </span>
+                  </td>
+                  <td>Awaiting signature</td>
+                </tr>
+                <tr>
+                  <td>EMP003 – Ravi Singh</td>
+                  <td>Metro Health Center</td>
+                  <td>
+                    <span class="badge-consent revoked">
+                      <span class="status-dot"></span>
+                      Revoked
+                    </span>
+                  </td>
+                  <td>Revoked 10 Jan 2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="footer-text">
+            In a real app, this table would come from your consent management backend or FHIR-based consent records.[web:117][web:120]
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer-text">
+      Demo company portal UI – connect to your API to persist employee and consent data.
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("employee-form");
+    const clearFormBtn = document.getElementById("clear-form");
+    const tbody = document.getElementById("employee-tbody");
+    const countLabel = document.getElementById("employee-count");
+    const formError = document.getElementById("form-error");
+
+    const summaryCheckups = document.getElementById("summary-checkups");
+    const summaryConsent = document.getElementById("summary-consent");
+    const summaryHospitals = document.getElementById("summary-hospitals");
+
+    let employees = [];
+    let partnerHospitalSet = new Set();
+
+    function updateSummaries() {
+      // For demo, assume ~60% employees have recent checkups and ~70% have active consent.
+      const total = employees.length;
+      const checkups = Math.round(total * 0.6);
+      const consent = Math.round(total * 0.7);
+
+      summaryCheckups.textContent = total ? checkups : 0;
+      summaryConsent.textContent = total ? consent : 0;
+      summaryHospitals.textContent = partnerHospitalSet.size;
+    }
+
+    function renderTable() {
+      tbody.innerHTML = "";
+      employees.forEach((emp, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${emp.emp_id}</td>
+          <td>${emp.name}</td>
+          <td>${emp.department}</td>
+          <td>${emp.partner_hospital}</td>
+          <td>${emp.status}</td>
+          <td>${emp.email}</td>
+          <td>${emp.phone}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      countLabel.textContent =
+        employees.length === 1
+          ? "1 employee"
+          : employees.length + " employees";
+
+      updateSummaries();
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      formError.style.display = "none";
+
+      const emp_id = document.getElementById("emp_id").value.trim();
+      const name = document.getElementById("name").value.trim();
+      const department =
+        document.getElementById("department").value.trim() || "-";
+      const partner_hospital =
+        document.getElementById("partner_hospital").value.trim() || "-";
+      const status =
+        document.getElementById("status").value || "Active";
+      const email = document.getElementById("email").value.trim() || "-";
+      const phone = document.getElementById("phone").value.trim() || "-";
+
+      if (!emp_id || !name) {
+        formError.style.display = "block";
+        return;
+      }
+
+      employees.push({
+        emp_id,
+        name,
+        department,
+        partner_hospital,
+        status,
+        email,
+        phone
+      });
+
+      if (partner_hospital !== "-") {
+        partnerHospitalSet.add(partner_hospital);
+      }
+
+      form.reset();
+      renderTable();
+    });
+
+    clearFormBtn.addEventListener("click", function () {
+      form.reset();
+      formError.style.display = "none";
+    });
+
+    renderTable();
+  </script>
+</body>
+</html>

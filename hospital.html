@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hospital Portal · Employee Health Connect</title>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --bg-soft: #e6f3f4;
+      --primary: #2a9d8f;
+      --primary-soft: #d4f3ed;
+      --primary-deep: #1f766b;
+      --accent: #f4a261;
+      --text-main: #0f172a;
+      --text-muted: #6b7280;
+      --border-soft: #dde5f0;
+      --danger: #e11d48;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at top left, #e6f3f4, #f4f8fb 40%, #fdfdfd 80%);
+      color: var(--text-main);
+      display: flex;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .sidebar {
+      width: 230px;
+      background: #0b1727;
+      color: #e5e7eb;
+      padding: 18px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--primary), #3fb7a8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 0.9rem;
+      box-shadow: 0 6px 14px rgba(47, 127, 111, 0.35);
+    }
+
+    .logo span {
+      font-size: 0.98rem;
+      font-weight: 700;
+    }
+
+    .sidebar-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-top: 6px;
+      margin-bottom: 4px;
+    }
+
+    .nav-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .nav-item {
+      font-size: 0.84rem;
+      padding: 7px 10px;
+      border-radius: 999px;
+      color: #e5e7eb;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-item span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .nav-item small {
+      font-size: 0.7rem;
+      color: #9ca3af;
+    }
+
+    .nav-item.active {
+      background: rgba(42, 157, 143, 0.18);
+      color: #e0f2fe;
+    }
+
+    .nav-item:hover {
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.76rem;
+      color: #9ca3af;
+    }
+
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 999px;
+      padding: 3px 7px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #e5e7eb;
+      margin-top: 6px;
+      font-size: 0.7rem;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .main {
+      flex: 1;
+      padding: 16px 18px 18px;
+      overflow: auto;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
+    .top-bar-left {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .top-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    .top-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .top-bar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: none;
+      cursor: pointer;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s, transform 0.1s, box-shadow 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(42, 157, 143, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-deep);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .btn-outline:hover {
+      background: #dbeafe;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 960px) {
+      .sidebar {
+        display: none;
+      }
+      .content-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 18px;
+      padding: 14px 14px 12px;
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    }
+
+    .card-header {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .card-header h2 {
+      font-size: 0.96rem;
+      color: var(--text-main);
+    }
+
+    .card-header span {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .divider {
+      height: 1px;
+      background: #e5e7eb;
+      margin: 8px 0;
+    }
+
+    /* Forms and tables */
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    @media (max-width: 640px) {
+      .two-cols {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .field {
+      margin-bottom: 8px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.78rem;
+      margin-bottom: 3px;
+      color: #374151;
+    }
+
+    .input, select, textarea {
+      width: 100%;
+      padding: 7px 9px;
+      border-radius: 10px;
+      border: 1px solid var(--border-soft);
+      background: #f9fafb;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
+    }
+
+    .input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.15);
+      background: #ffffff;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 4px;
+      flex-wrap: wrap;
+    }
+
+    .error-text {
+      display: none;
+      margin-top: 4px;
+      font-size: 0.76rem;
+      color: var(--danger);
+    }
+
+    .table-wrapper {
+      margin-top: 6px;
+      max-height: 240px;
+      overflow: auto;
+      border-radius: 12px;
+      border: 1px solid #e5e7eb;
+      background: #f9fafb;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+
+    thead {
+      position: sticky;
+      top: 0;
+      background: #e5f5f5;
+      z-index: 1;
+    }
+
+    th, td {
+      padding: 6px 7px;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+    }
+
+    tbody tr:nth-child(even) {
+      background: #fdfdfd;
+    }
+
+    tbody tr:hover {
+      background: #ecfeff;
+    }
+
+    .badge-role {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: #eff6ff;
+      color: #1d4ed8;
+      border: 1px solid #bfdbfe;
+    }
+
+    .badge-status {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      gap: 4px;
+    }
+
+    .badge-status.online {
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+    }
+
+    .badge-status.offline {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .chips-row {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    .chip {
+      font-size: 0.7rem;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .summary-card {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 8px 9px;
+      border: 1px solid #e5e7eb;
+      font-size: 0.78rem;
+    }
+
+    .summary-title {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .summary-value {
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .summary-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .pill-warning {
+      background: #fef9c3;
+      color: #854d0e;
+      border-color: #facc15;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      background: #ecfdf5;
+      color: #166534;
+      border: 1px solid #bbf7d0;
+      gap: 4px;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    .footer-text {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-align: right;
+    }
+  </style>
+</head>
+<body>
+  <aside class="sidebar">
+    <div>
+      <div class="logo">
+        <div class="logo-mark">EH</div>
+        <span>Hospital Portal</span>
+      </div>
+      <div class="sidebar-label">Navigation</div>
+      <ul class="nav-list">
+        <li class="nav-item active">
+          <span class="label">Hospital profile</span>
+          <small>Basic info</small>
+        </li>
+        <li class="nav-item">
+          <span class="label">Doctor onboarding</span>
+          <small>Doctors</small>
+        </li>
+        <li class="nav-item">
+          <span class="label">Visit history</span>
+          <small>Employees</small>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-footer">
+      Logged in as: <strong>Hospital Admin</strong><br />
+      <span class="badge-pill">
+        <span class="badge-dot"></span>
+        Live visit logging
+      </span>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <div class="top-title">For Hospitals</div>
+        <div class="top-subtitle">
+          Onboard your hospital, manage doctors, and view employee visits connected to your organization.
+        </div>
+      </div>
+      <div class="top-bar-right">
+        <button class="btn btn-outline" onclick="location.href='index.html'">
+          Home
+        </button>
+        <button class="btn btn-primary">
+          Export visit log
+        </button>
+      </div>
+    </div>
+
+    <div class="content-grid">
+      <!-- Left: Hospital profile + Doctor onboarding -->
+      <section>
+        <!-- Hospital profile -->
+        <div class="card">
+          <div class="card-header">
+            <h2>Hospital profile</h2>
+            <span>Update your hospital details for company partners and doctors.</span>
+          </div>
+          <div class="divider"></div>
+
+          <form id="hospital-profile-form">
+            <div class="field">
+              <label for="hospital_name">Hospital name</label>
+              <input
+                class="input"
+                type="text"
+                id="hospital_name"
+                name="hospital_name"
+                placeholder="City Care Hospital"
+                value="City Care Hospital"
+              />
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="registration_no">Registration number</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="registration_no"
+                  name="registration_no"
+                  placeholder="REG-123456"
+                  value="REG-123456"
+                />
+              </div>
+              <div class="field">
+                <label for="contact_email">Contact email</label>
+                <input
+                  class="input"
+                  type="email"
+                  id="contact_email"
+                  name="contact_email"
+                  placeholder="admin@citycarehospital.com"
+                  value="admin@citycarehospital.com"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input
+                  class="input"
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="+91 98765 43210"
+                  value="+91 98765 43210"
+                />
+              </div>
+              <div class="field">
+                <label for="address">Address</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="address"
+                  name="address"
+                  placeholder="123 Wellness Street, Mumbai"
+                  value="123 Wellness Street, Mumbai"
+                />
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="description">Short description</label>
+              <textarea
+                id="description"
+                name="description"
+                placeholder="Brief description of your hospital, departments, and services."
+              >Multi-speciality hospital partnering with companies for employee wellness, checkups, and occupational health services.</textarea>
+            </div>
+
+            <div class="btn-row">
+              <button type="button" class="btn btn-primary">
+                Save profile
+              </button>
+              <button type="button" class="btn btn-outline" onclick="location.href='hospital-portal.html'">
+                Reset
+              </button>
+            </div>
+          </form>
+
+          <div class="chips-row">
+            <span class="chip">Hospital profile</span>
+            <span class="chip">Partner companies</span>
+            <span class="chip">Contact info</span>
+          </div>
+        </div>
+
+        <!-- Doctor onboarding -->
+        <div class="card" style="margin-top:12px;">
+          <div class="card-header">
+            <h2>Doctor onboarding</h2>
+            <span>Add and manage doctors working under this hospital.</span>
+          </div>
+          <div class="divider"></div>
+
+          <form id="doctor-form">
+            <div class="two-cols">
+              <div class="field">
+                <label for="doctor_name">Doctor name</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="doctor_name"
+                  name="doctor_name"
+                  placeholder="Dr. A. Sharma"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="specialization">Specialization</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="specialization"
+                  name="specialization"
+                  placeholder="Cardiologist / Physician"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="doctor_email">Email</label>
+                <input
+                  class="input"
+                  type="email"
+                  id="doctor_email"
+                  name="doctor_email"
+                  placeholder="doctor@citycarehospital.com"
+                />
+              </div>
+              <div class="field">
+                <label for="doctor_phone">Phone</label>
+                <input
+                  class="input"
+                  type="tel"
+                  id="doctor_phone"
+                  name="doctor_phone"
+                  placeholder="+91 98765 43210"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="doctor_status">Status</label>
+                <select id="doctor_status" name="doctor_status" class="input">
+                  <option value="Online">Online</option>
+                  <option value="Offline">Offline</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="license_no">Registration / License no.</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="license_no"
+                  name="license_no"
+                  placeholder="MCI-12345"
+                />
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary">
+                Add doctor
+              </button>
+              <button type="button" class="btn btn-outline" id="clear-doctor-form">
+                Clear form
+              </button>
+            </div>
+
+            <div id="doctor-error" class="error-text">
+              Please enter at least a doctor name.
+            </div>
+          </form>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Doctor</th>
+                  <th>Specialization</th>
+                  <th>Status</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>License</th>
+                </tr>
+              </thead>
+              <tbody id="doctor-tbody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right: Visit history + small summary -->
+      <section>
+        <div class="card">
+          <div class="card-header">
+            <h2>Visit history</h2>
+            <span>List of employee visits recorded under this hospital.</span>
+          </div>
+          <div class="divider"></div>
+
+          <form id="visit-form">
+            <div class="two-cols">
+              <div class="field">
+                <label for="visit_emp_id">Employee ID</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="visit_emp_id"
+                  name="visit_emp_id"
+                  placeholder="EMP001"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="visit_emp_name">Employee name</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="visit_emp_name"
+                  name="visit_emp_name"
+                  placeholder="John Doe"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="visit_doctor">Doctor</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="visit_doctor"
+                  name="visit_doctor"
+                  placeholder="Dr. A. Sharma"
+                />
+              </div>
+              <div class="field">
+                <label for="visit_date">Visit date</label>
+                <input
+                  class="input"
+                  type="date"
+                  id="visit_date"
+                  name="visit_date"
+                />
+              </div>
+            </div>
+
+            <div class="two-cols">
+              <div class="field">
+                <label for="visit_purpose">Purpose</label>
+                <input
+                  class="input"
+                  type="text"
+                  id="visit_purpose"
+                  name="visit_purpose"
+                  placeholder="Annual health checkup / Consultation"
+                />
+              </div>
+              <div class="field">
+                <label for="visit_status">Status</label>
+                <select id="visit_status" name="visit_status" class="input">
+                  <option value="Completed">Completed</option>
+                  <option value="Scheduled">Scheduled</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="btn-row">
+              <button type="submit" class="btn btn-primary">
+                Add visit
+              </button>
+              <button type="button" class="btn btn-outline" id="clear-visit-form">
+                Clear form
+              </button>
+            </div>
+
+            <div id="visit-error" class="error-text">
+              Please enter at least Employee ID.
+            </div>
+          </form>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Employee</th>
+                  <th>Doctor</th>
+                  <th>Date</th>
+                  <th>Purpose</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="visit-tbody">
+                <!-- Dynamic rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px;">
+          <div class="card-header">
+            <h2>Hospital summary</h2>
+            <span>Quick snapshot of doctors and visits.</span>
+          </div>
+          <div class="divider"></div>
+
+          <div class="summary-grid">
+            <div class="summary-card">
+              <div class="summary-title">Total doctors</div>
+              <div class="summary-value" id="summary-doctors">0</div>
+              <div class="summary-sub">Onboarded in this hospital</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Online doctors</div>
+              <div class="summary-value" id="summary-online">0</div>
+              <div class="summary-sub">Status marked as “Online”</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Total visits</div>
+              <div class="summary-value" id="summary-visits">0</div>
+              <div class="summary-sub">Logged in visit history</div>
+            </div>
+            <div class="summary-card">
+              <div class="summary-title">Completed visits</div>
+              <div class="summary-value" id="summary-completed">0</div>
+              <div class="summary-sub">Marked as “Completed”</div>
+            </div>
+          </div>
+
+          <div class="chips-row">
+            <span class="chip">Hospital profile</span>
+            <span class="chip">Doctor onboarding</span>
+            <span class="chip">Visit history</span>
+          </div>
+
+          <div class="footer-text">
+            In a production system, this summary would pull live data from your hospital management backend or EMR.[web:132][web:134]
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="footer-text">
+      Demo hospital portal UI – connect to your API to persist hospital details, doctors, and visit logs.
+    </div>
+  </main>
+
+  <script>
+    // Doctor onboarding logic
+    const doctorForm = document.getElementById("doctor-form");
+    const clearDoctorFormBtn = document.getElementById("clear-doctor-form");
+    const doctorTbody = document.getElementById("doctor-tbody");
+    const doctorError = document.getElementById("doctor-error");
+
+    const summaryDoctors = document.getElementById("summary-doctors");
+    const summaryOnline = document.getElementById("summary-online");
+
+    let doctors = [];
+
+    function renderDoctors() {
+      doctorTbody.innerHTML = "";
+      let onlineCount = 0;
+
+      doctors.forEach((doc, index) => {
+        if (doc.status === "Online") onlineCount++;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${doc.name}</td>
+          <td>${doc.specialization}</td>
+          <td>
+            <span class="badge-status ${doc.status === "Online" ? "online" : "offline"}">
+              <span class="status-dot"></span>${doc.status}
+            </span>
+          </td>
+          <td>${doc.email}</td>
+          <td>${doc.phone}</td>
+          <td>${doc.license}</td>
+        `;
+        doctorTbody.appendChild(tr);
+      });
+
+      summaryDoctors.textContent = doctors.length;
+      summaryOnline.textContent = onlineCount;
+    }
+
+    doctorForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      doctorError.style.display = "none";
+
+      const name = document.getElementById("doctor_name").value.trim();
+      const specialization =
+        document.getElementById("specialization").value.trim() || "-";
+      const email =
+        document.getElementById("doctor_email").value.trim() || "-";
+      const phone =
+        document.getElementById("doctor_phone").value.trim() || "-";
+      const status = document.getElementById("doctor_status").value || "Online";
+      const license =
+        document.getElementById("license_no").value.trim() || "-";
+
+      if (!name) {
+        doctorError.style.display = "block";
+        return;
+      }
+
+      doctors.push({
+        name,
+        specialization,
+        email,
+        phone,
+        status,
+        license
+      });
+
+      doctorForm.reset();
+      renderDoctors();
+    });
+
+    clearDoctorFormBtn.addEventListener("click", function () {
+      doctorForm.reset();
+      doctorError.style.display = "none";
+    });
+
+    // Visit history logic
+    const visitForm = document.getElementById("visit-form");
+    const clearVisitFormBtn = document.getElementById("clear-visit-form");
+    const visitTbody = document.getElementById("visit-tbody");
+    const visitError = document.getElementById("visit-error");
+
+    const summaryVisits = document.getElementById("summary-visits");
+    const summaryCompleted = document.getElementById("summary-completed");
+
+    let visits = [];
+
+    function renderVisits() {
+      visitTbody.innerHTML = "";
+      let completedCount = 0;
+
+      visits.forEach((v, index) => {
+        if (v.status === "Completed") completedCount++;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${index + 1}</td>
+          <td>${v.emp_id} – ${v.emp_name}</td>
+          <td>${v.doctor}</td>
+          <td>${v.date}</td>
+          <td>${v.purpose}</td>
+          <td>${v.status}</td>
+        `;
+        visitTbody.appendChild(tr);
+      });
+
+      summaryVisits.textContent = visits.length;
+      summaryCompleted.textContent = completedCount;
+    }
+
+    visitForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+      visitError.style.display = "none";
+
+      const emp_id = document.getElementById("visit_emp_id").value.trim();
+      const emp_name =
+        document.getElementById("visit_emp_name").value.trim() || "-";
+      const doctor =
+        document.getElementById("visit_doctor").value.trim() || "-";
+      const date =
+        document.getElementById("visit_date").value ||
+        new Date().toISOString().slice(0, 10);
+      const purpose =
+        document.getElementById("visit_purpose").value.trim() || "-";
+      const status =
+        document.getElementById("visit_status").value || "Completed";
+
+      if (!emp_id) {
+        visitError.style.display = "block";
+        return;
+      }
+
+      visits.push({
+        emp_id,
+        emp_name,
+        doctor,
+        date,
+        purpose,
+        status
+      });
+
+      visitForm.reset();
+      renderVisits();
+    });
+
+    clearVisitFormBtn.addEventListener("click", function () {
+      visitForm.reset();
+      visitError.style.display = "none";
+    });
+
+    // Initial render
+    renderDoctors();
+    renderVisits();
+  </script>
+</body>
+</html>
