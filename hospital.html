@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -229,6 +230,7 @@
       .sidebar {
         display: none;
       }
+
       .content-grid {
         grid-template-columns: minmax(0, 1fr);
       }
@@ -291,7 +293,9 @@
       color: #374151;
     }
 
-    .input, select, textarea {
+    .input,
+    select,
+    textarea {
       width: 100%;
       padding: 7px 9px;
       border-radius: 10px;
@@ -303,7 +307,9 @@
       transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
     }
 
-    .input:focus, select:focus, textarea:focus {
+    .input:focus,
+    select:focus,
+    textarea:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.15);
       background: #ffffff;
@@ -350,7 +356,8 @@
       z-index: 1;
     }
 
-    th, td {
+    th,
+    td {
       padding: 6px 7px;
       text-align: left;
       border-bottom: 1px solid #e5e7eb;
@@ -487,8 +494,100 @@
       color: var(--text-muted);
       text-align: right;
     }
+
+    /* DARK MODE OVERRIDE */
+    :root {
+      --bg: #0f172a !important;
+      --bg-soft: #1e293b !important;
+      --primary: #38bdf8 !important;
+      --primary-soft: rgba(56, 189, 248, 0.1) !important;
+      --primary-deep: #0284c7 !important;
+      --text-main: #f8fafc !important;
+      --text-muted: #94a3b8 !important;
+      --border-soft: rgba(255, 255, 255, 0.1) !important;
+      --danger: #ef4444 !important;
+      --success: #22c55e !important;
+    }
+
+    body {
+      background: radial-gradient(circle at top left, #1e293b, #0f172a 40%, #000 80%) !important;
+      color: var(--text-main) !important;
+    }
+
+    .card {
+      background: rgba(30, 41, 59, 0.7) !important;
+      border: 1px solid var(--border-soft) !important;
+      backdrop-filter: blur(12px);
+    }
+
+    .input,
+    select,
+    textarea {
+      background: #0f172a !important;
+      color: #f8fafc !important;
+      border-color: var(--border-soft) !important;
+    }
+
+    .input:focus,
+    select:focus,
+    textarea:focus {
+      background: #1e293b !important;
+    }
+
+    .table-wrapper {
+      background: transparent !important;
+      border-color: var(--border-soft) !important;
+    }
+
+    thead,
+    th {
+      background: rgba(30, 41, 59, 0.9) !important;
+      color: #f8fafc !important;
+      border-bottom: 1px solid var(--border-soft) !important;
+    }
+
+    tbody tr:nth-child(even),
+    tbody tr {
+      background: transparent !important;
+    }
+
+    tbody tr:hover {
+      background: rgba(56, 189, 248, 0.1) !important;
+    }
+
+    td {
+      border-bottom: 1px solid var(--border-soft) !important;
+      color: var(--text-main) !important;
+    }
+
+    .divider {
+      background: var(--border-soft) !important;
+    }
+
+    .sidebar {
+      background: #020617 !important;
+      border-right: 1px solid var(--border-soft) !important;
+    }
+
+    .summary-card {
+      background: rgba(30, 41, 59, 0.7) !important;
+      border-color: var(--border-soft) !important;
+    }
+
+    .close-btn,
+    .timeline-label,
+    .section-title,
+    label {
+      color: #f8fafc !important;
+    }
+
+    .patient-panel {
+      background: #0f172a !important;
+      border-left: 1px solid var(--border-soft) !important;
+    }
   </style>
 </head>
+
 <body>
   <aside class="sidebar">
     <div>
@@ -498,7 +597,7 @@
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
-        <li class="nav-item active">
+        <li class="nav-item active" onclick="location.href='hospital.html'" style="cursor:pointer">
           <span class="label">Hospital profile</span>
           <small>Basic info</small>
         </li>
@@ -554,80 +653,47 @@
           <form id="hospital-profile-form">
             <div class="field">
               <label for="hospital_name">Hospital name</label>
-              <input
-                class="input"
-                type="text"
-                id="hospital_name"
-                name="hospital_name"
-                placeholder="City Care Hospital"
-                value="City Care Hospital"
-              />
+              <input class="input" type="text" id="hospital_name" name="hospital_name" placeholder="City Care Hospital"
+                value="City Care Hospital" />
             </div>
 
             <div class="two-cols">
               <div class="field">
                 <label for="registration_no">Registration number</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="registration_no"
-                  name="registration_no"
-                  placeholder="REG-123456"
-                  value="REG-123456"
-                />
+                <input class="input" type="text" id="registration_no" name="registration_no" placeholder="REG-123456"
+                  value="REG-123456" />
               </div>
               <div class="field">
                 <label for="contact_email">Contact email</label>
-                <input
-                  class="input"
-                  type="email"
-                  id="contact_email"
-                  name="contact_email"
-                  placeholder="admin@citycarehospital.com"
-                  value="admin@citycarehospital.com"
-                />
+                <input class="input" type="email" id="contact_email" name="contact_email"
+                  placeholder="admin@citycarehospital.com" value="admin@citycarehospital.com" />
               </div>
             </div>
 
             <div class="two-cols">
               <div class="field">
                 <label for="phone">Phone</label>
-                <input
-                  class="input"
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  placeholder="+91 98765 43210"
-                  value="+91 98765 43210"
-                />
+                <input class="input" type="tel" id="phone" name="phone" placeholder="+91 98765 43210"
+                  value="+91 98765 43210" />
               </div>
               <div class="field">
                 <label for="address">Address</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="address"
-                  name="address"
-                  placeholder="123 Wellness Street, Mumbai"
-                  value="123 Wellness Street, Mumbai"
-                />
+                <input class="input" type="text" id="address" name="address" placeholder="123 Wellness Street, Mumbai"
+                  value="123 Wellness Street, Mumbai" />
               </div>
             </div>
 
             <div class="field">
               <label for="description">Short description</label>
-              <textarea
-                id="description"
-                name="description"
-                placeholder="Brief description of your hospital, departments, and services."
-              >Multi-speciality hospital partnering with companies for employee wellness, checkups, and occupational health services.</textarea>
+              <textarea id="description" name="description"
+                placeholder="Brief description of your hospital, departments, and services.">Multi-speciality hospital partnering with companies for employee wellness, checkups, and occupational health services.</textarea>
             </div>
 
             <div class="btn-row">
               <button type="button" class="btn btn-primary">
                 Save profile
               </button>
-              <button type="button" class="btn btn-outline" onclick="location.href='hospital-portal.html'">
+              <button type="button" class="btn btn-outline" onclick="location.href='hospital.html'">
                 Reset
               </button>
             </div>
@@ -652,47 +718,25 @@
             <div class="two-cols">
               <div class="field">
                 <label for="doctor_name">Doctor name</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="doctor_name"
-                  name="doctor_name"
-                  placeholder="Dr. A. Sharma"
-                  required
-                />
+                <input class="input" type="text" id="doctor_name" name="doctor_name" placeholder="Dr. A. Sharma"
+                  required />
               </div>
               <div class="field">
                 <label for="specialization">Specialization</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="specialization"
-                  name="specialization"
-                  placeholder="Cardiologist / Physician"
-                />
+                <input class="input" type="text" id="specialization" name="specialization"
+                  placeholder="Cardiologist / Physician" />
               </div>
             </div>
 
             <div class="two-cols">
               <div class="field">
                 <label for="doctor_email">Email</label>
-                <input
-                  class="input"
-                  type="email"
-                  id="doctor_email"
-                  name="doctor_email"
-                  placeholder="doctor@citycarehospital.com"
-                />
+                <input class="input" type="email" id="doctor_email" name="doctor_email"
+                  placeholder="doctor@citycarehospital.com" />
               </div>
               <div class="field">
                 <label for="doctor_phone">Phone</label>
-                <input
-                  class="input"
-                  type="tel"
-                  id="doctor_phone"
-                  name="doctor_phone"
-                  placeholder="+91 98765 43210"
-                />
+                <input class="input" type="tel" id="doctor_phone" name="doctor_phone" placeholder="+91 98765 43210" />
               </div>
             </div>
 
@@ -706,13 +750,7 @@
               </div>
               <div class="field">
                 <label for="license_no">Registration / License no.</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="license_no"
-                  name="license_no"
-                  placeholder="MCI-12345"
-                />
+                <input class="input" type="text" id="license_no" name="license_no" placeholder="MCI-12345" />
               </div>
             </div>
 
@@ -764,59 +802,30 @@
             <div class="two-cols">
               <div class="field">
                 <label for="visit_emp_id">Employee ID</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="visit_emp_id"
-                  name="visit_emp_id"
-                  placeholder="EMP001"
-                  required
-                />
+                <input class="input" type="text" id="visit_emp_id" name="visit_emp_id" placeholder="EMP001" required />
               </div>
               <div class="field">
                 <label for="visit_emp_name">Employee name</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="visit_emp_name"
-                  name="visit_emp_name"
-                  placeholder="John Doe"
-                />
+                <input class="input" type="text" id="visit_emp_name" name="visit_emp_name" placeholder="John Doe" />
               </div>
             </div>
 
             <div class="two-cols">
               <div class="field">
                 <label for="visit_doctor">Doctor</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="visit_doctor"
-                  name="visit_doctor"
-                  placeholder="Dr. A. Sharma"
-                />
+                <input class="input" type="text" id="visit_doctor" name="visit_doctor" placeholder="Dr. A. Sharma" />
               </div>
               <div class="field">
                 <label for="visit_date">Visit date</label>
-                <input
-                  class="input"
-                  type="date"
-                  id="visit_date"
-                  name="visit_date"
-                />
+                <input class="input" type="date" id="visit_date" name="visit_date" />
               </div>
             </div>
 
             <div class="two-cols">
               <div class="field">
                 <label for="visit_purpose">Purpose</label>
-                <input
-                  class="input"
-                  type="text"
-                  id="visit_purpose"
-                  name="visit_purpose"
-                  placeholder="Annual health checkup / Consultation"
-                />
+                <input class="input" type="text" id="visit_purpose" name="visit_purpose"
+                  placeholder="Annual health checkup / Consultation" />
               </div>
               <div class="field">
                 <label for="visit_status">Status</label>
@@ -898,7 +907,8 @@
           </div>
 
           <div class="footer-text">
-            In a production system, this summary would pull live data from your hospital management backend or EMR.[web:132][web:134]
+            In a production system, this summary would pull live data from your hospital management backend or
+            EMR.[web:132][web:134]
           </div>
         </div>
       </section>
@@ -910,6 +920,13 @@
   </main>
 
   <script>
+    // Auth Check
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!token || user.role !== 'hospital') {
+      window.location.href = 'index.html';
+    }
+
     // Doctor onboarding logic
     const doctorForm = document.getElementById("doctor-form");
     const clearDoctorFormBtn = document.getElementById("clear-doctor-form");
@@ -948,37 +965,46 @@
       summaryOnline.textContent = onlineCount;
     }
 
-    doctorForm.addEventListener("submit", function (event) {
+    doctorForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       doctorError.style.display = "none";
 
-      const name = document.getElementById("doctor_name").value.trim();
-      const specialization =
-        document.getElementById("specialization").value.trim() || "-";
-      const email =
-        document.getElementById("doctor_email").value.trim() || "-";
-      const phone =
-        document.getElementById("doctor_phone").value.trim() || "-";
-      const status = document.getElementById("doctor_status").value || "Online";
-      const license =
-        document.getElementById("license_no").value.trim() || "-";
+      const doctor_name = document.getElementById("doctor_name").value.trim();
+      const specialization = document.getElementById("specialization").value.trim() || "-";
+      const doctor_email = document.getElementById("doctor_email").value.trim() || "-";
+      const doctor_phone = document.getElementById("doctor_phone").value.trim() || "-";
+      const doctor_status = document.getElementById("doctor_status").value || "Online";
+      const license_no = document.getElementById("license_no").value.trim() || "-";
 
-      if (!name) {
+      if (!doctor_name) {
+        doctorError.textContent = "Please enter at least a doctor name.";
         doctorError.style.display = "block";
         return;
       }
 
-      doctors.push({
-        name,
-        specialization,
-        email,
-        phone,
-        status,
-        license
-      });
+      const data = { doctor_name, specialization, doctor_email, doctor_phone, doctor_status, license_no };
 
-      doctorForm.reset();
-      renderDoctors();
+      try {
+        const response = await fetch('/api/hospital/doctors', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          doctorForm.reset();
+          fetchData();
+        } else {
+          doctorError.textContent = "Failed to add doctor.";
+          doctorError.style.display = "block";
+        }
+      } catch (err) {
+        doctorError.textContent = "Server error. Try again later.";
+        doctorError.style.display = "block";
+      }
     });
 
     clearDoctorFormBtn.addEventListener("click", function () {
@@ -1019,39 +1045,46 @@
       summaryCompleted.textContent = completedCount;
     }
 
-    visitForm.addEventListener("submit", function (event) {
+    visitForm.addEventListener("submit", async function (event) {
       event.preventDefault();
       visitError.style.display = "none";
 
-      const emp_id = document.getElementById("visit_emp_id").value.trim();
-      const emp_name =
-        document.getElementById("visit_emp_name").value.trim() || "-";
-      const doctor =
-        document.getElementById("visit_doctor").value.trim() || "-";
-      const date =
-        document.getElementById("visit_date").value ||
-        new Date().toISOString().slice(0, 10);
-      const purpose =
-        document.getElementById("visit_purpose").value.trim() || "-";
-      const status =
-        document.getElementById("visit_status").value || "Completed";
+      const visit_emp_id = document.getElementById("visit_emp_id").value.trim();
+      const visit_emp_name = document.getElementById("visit_emp_name").value.trim() || "-";
+      const visit_doctor = document.getElementById("visit_doctor").value.trim() || "-";
+      const visit_date = document.getElementById("visit_date").value || new Date().toISOString().slice(0, 10);
+      const visit_purpose = document.getElementById("visit_purpose").value.trim() || "-";
+      const visit_status = document.getElementById("visit_status").value || "Completed";
 
-      if (!emp_id) {
+      if (!visit_emp_id) {
+        visitError.textContent = "Please enter at least Employee ID.";
         visitError.style.display = "block";
         return;
       }
 
-      visits.push({
-        emp_id,
-        emp_name,
-        doctor,
-        date,
-        purpose,
-        status
-      });
+      const data = { visit_emp_id, visit_emp_name, visit_doctor, visit_date, visit_purpose, visit_status };
 
-      visitForm.reset();
-      renderVisits();
+      try {
+        const response = await fetch('/api/hospital/visits', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          visitForm.reset();
+          fetchData();
+        } else {
+          visitError.textContent = "Failed to add visit.";
+          visitError.style.display = "block";
+        }
+      } catch (err) {
+        visitError.textContent = "Server error. Try again later.";
+        visitError.style.display = "block";
+      }
     });
 
     clearVisitFormBtn.addEventListener("click", function () {
@@ -1059,9 +1092,26 @@
       visitError.style.display = "none";
     });
 
+    async function fetchData() {
+      try {
+        const [docRes, visRes] = await Promise.all([
+          fetch('/api/hospital/doctors', { headers: { 'Authorization': `Bearer ${token}` } }),
+          fetch('/api/hospital/visits', { headers: { 'Authorization': `Bearer ${token}` } })
+        ]);
+
+        if (docRes.ok) doctors = await docRes.json();
+        if (visRes.ok) visits = await visRes.json();
+
+        renderDoctors();
+        renderVisits();
+      } catch (err) {
+        console.error("Failed to fetch data", err);
+      }
+    }
+
     // Initial render
-    renderDoctors();
-    renderVisits();
+    fetchData();
   </script>
 </body>
+
 </html>

@@ -512,6 +512,75 @@
       color: var(--text-muted);
       text-align: right;
     }
+  
+    /* DARK MODE OVERRIDE */
+    :root {
+      --bg: #0f172a !important;
+      --bg-soft: #1e293b !important;
+      --primary: #38bdf8 !important;
+      --primary-soft: rgba(56, 189, 248, 0.1) !important;
+      --primary-deep: #0284c7 !important;
+      --text-main: #f8fafc !important;
+      --text-muted: #94a3b8 !important;
+      --border-soft: rgba(255, 255, 255, 0.1) !important;
+      --danger: #ef4444 !important;
+      --success: #22c55e !important;
+    }
+    body {
+      background: radial-gradient(circle at top left, #1e293b, #0f172a 40%, #000 80%) !important;
+      color: var(--text-main) !important;
+    }
+    .card {
+      background: rgba(30, 41, 59, 0.7) !important;
+      border: 1px solid var(--border-soft) !important;
+      backdrop-filter: blur(12px);
+    }
+    .input, select, textarea {
+      background: #0f172a !important;
+      color: #f8fafc !important;
+      border-color: var(--border-soft) !important;
+    }
+    .input:focus, select:focus, textarea:focus {
+      background: #1e293b !important;
+    }
+    .table-wrapper {
+      background: transparent !important;
+      border-color: var(--border-soft) !important;
+    }
+    thead, th {
+      background: rgba(30, 41, 59, 0.9) !important;
+      color: #f8fafc !important;
+      border-bottom: 1px solid var(--border-soft) !important;
+    }
+    tbody tr:nth-child(even), tbody tr {
+      background: transparent !important;
+    }
+    tbody tr:hover {
+      background: rgba(56, 189, 248, 0.1) !important;
+    }
+    td {
+      border-bottom: 1px solid var(--border-soft) !important;
+      color: var(--text-main) !important;
+    }
+    .divider {
+      background: var(--border-soft) !important;
+    }
+    .sidebar {
+      background: #020617 !important;
+      border-right: 1px solid var(--border-soft) !important;
+    }
+    .summary-card {
+      background: rgba(30, 41, 59, 0.7) !important;
+      border-color: var(--border-soft) !important;
+    }
+    .close-btn, .timeline-label, .section-title, label {
+      color: #f8fafc !important;
+    }
+    .patient-panel {
+      background: #0f172a !important;
+      border-left: 1px solid var(--border-soft) !important;
+    }
+
   </style>
 </head>
 <body>
@@ -523,7 +592,7 @@
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
-        <li class="nav-item active">
+        <li class="nav-item active" onclick="location.href='audit-compliance.html'" style="cursor:pointer">
           <span class="label">Audit trail</span>
           <small>Logs</small>
         </li>

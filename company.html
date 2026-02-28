@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -229,6 +230,7 @@
       .sidebar {
         display: none;
       }
+
       .content-grid {
         grid-template-columns: minmax(0, 1fr);
       }
@@ -290,7 +292,8 @@
       color: #374151;
     }
 
-    .input, select {
+    .input,
+    select {
       width: 100%;
       padding: 7px 9px;
       border-radius: 10px;
@@ -302,7 +305,8 @@
       transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
     }
 
-    .input:focus, select:focus {
+    .input:focus,
+    select:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.15);
       background: #ffffff;
@@ -344,7 +348,8 @@
       z-index: 1;
     }
 
-    th, td {
+    th,
+    td {
       padding: 6px 7px;
       text-align: left;
       border-bottom: 1px solid #e5e7eb;
@@ -497,8 +502,78 @@
       color: var(--text-muted);
       text-align: right;
     }
+  
+    /* DARK MODE OVERRIDE */
+    :root {
+      --bg: #0f172a !important;
+      --bg-soft: #1e293b !important;
+      --primary: #38bdf8 !important;
+      --primary-soft: rgba(56, 189, 248, 0.1) !important;
+      --primary-deep: #0284c7 !important;
+      --text-main: #f8fafc !important;
+      --text-muted: #94a3b8 !important;
+      --border-soft: rgba(255, 255, 255, 0.1) !important;
+      --danger: #ef4444 !important;
+      --success: #22c55e !important;
+    }
+    body {
+      background: radial-gradient(circle at top left, #1e293b, #0f172a 40%, #000 80%) !important;
+      color: var(--text-main) !important;
+    }
+    .card {
+      background: rgba(30, 41, 59, 0.7) !important;
+      border: 1px solid var(--border-soft) !important;
+      backdrop-filter: blur(12px);
+    }
+    .input, select, textarea {
+      background: #0f172a !important;
+      color: #f8fafc !important;
+      border-color: var(--border-soft) !important;
+    }
+    .input:focus, select:focus, textarea:focus {
+      background: #1e293b !important;
+    }
+    .table-wrapper {
+      background: transparent !important;
+      border-color: var(--border-soft) !important;
+    }
+    thead, th {
+      background: rgba(30, 41, 59, 0.9) !important;
+      color: #f8fafc !important;
+      border-bottom: 1px solid var(--border-soft) !important;
+    }
+    tbody tr:nth-child(even), tbody tr {
+      background: transparent !important;
+    }
+    tbody tr:hover {
+      background: rgba(56, 189, 248, 0.1) !important;
+    }
+    td {
+      border-bottom: 1px solid var(--border-soft) !important;
+      color: var(--text-main) !important;
+    }
+    .divider {
+      background: var(--border-soft) !important;
+    }
+    .sidebar {
+      background: #020617 !important;
+      border-right: 1px solid var(--border-soft) !important;
+    }
+    .summary-card {
+      background: rgba(30, 41, 59, 0.7) !important;
+      border-color: var(--border-soft) !important;
+    }
+    .close-btn, .timeline-label, .section-title, label {
+      color: #f8fafc !important;
+    }
+    .patient-panel {
+      background: #0f172a !important;
+      border-left: 1px solid var(--border-soft) !important;
+    }
+
   </style>
 </head>
+
 <body>
   <aside class="sidebar">
     <div>
@@ -508,7 +583,7 @@
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
-        <li class="nav-item active">
+        <li class="nav-item active" onclick="location.href='company.html'" style="cursor:pointer">
           <span class="label">Employee registry</span>
           <small>View & add</small>
         </li>
@@ -562,50 +637,25 @@
         <form id="employee-form">
           <div class="field">
             <label for="emp_id">Employee ID</label>
-            <input
-              class="input"
-              type="text"
-              id="emp_id"
-              name="emp_id"
-              placeholder="EMP001"
-              required
-            />
+            <input class="input" type="text" id="emp_id" name="emp_id" placeholder="EMP001" required />
           </div>
 
           <div class="two-cols">
             <div class="field">
               <label for="name">Full name</label>
-              <input
-                class="input"
-                type="text"
-                id="name"
-                name="name"
-                placeholder="John Doe"
-                required
-              />
+              <input class="input" type="text" id="name" name="name" placeholder="John Doe" required />
             </div>
             <div class="field">
               <label for="department">Department</label>
-              <input
-                class="input"
-                type="text"
-                id="department"
-                name="department"
-                placeholder="IT / HR / Finance"
-              />
+              <input class="input" type="text" id="department" name="department" placeholder="IT / HR / Finance" />
             </div>
           </div>
 
           <div class="two-cols">
             <div class="field">
               <label for="partner_hospital">Partner hospital</label>
-              <input
-                class="input"
-                type="text"
-                id="partner_hospital"
-                name="partner_hospital"
-                placeholder="City Care Hospital"
-              />
+              <input class="input" type="text" id="partner_hospital" name="partner_hospital"
+                placeholder="City Care Hospital" />
             </div>
             <div class="field">
               <label for="status">Status</label>
@@ -620,23 +670,11 @@
           <div class="two-cols">
             <div class="field">
               <label for="email">Email</label>
-              <input
-                class="input"
-                type="email"
-                id="email"
-                name="email"
-                placeholder="john.doe@example.com"
-              />
+              <input class="input" type="email" id="email" name="email" placeholder="john.doe@example.com" />
             </div>
             <div class="field">
               <label for="phone">Phone</label>
-              <input
-                class="input"
-                type="tel"
-                id="phone"
-                name="phone"
-                placeholder="+91 98765 43210"
-              />
+              <input class="input" type="tel" id="phone" name="phone" placeholder="+91 98765 43210" />
             </div>
           </div>
 
@@ -777,7 +815,8 @@
           </div>
 
           <div class="footer-text">
-            In a real app, this table would come from your consent management backend or FHIR-based consent records.[web:117][web:120]
+            In a real app, this table would come from your consent management backend or FHIR-based consent
+            records.[web:117][web:120]
           </div>
         </div>
       </section>
@@ -789,6 +828,16 @@
   </main>
 
   <script>
+    // Auth Check
+    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (!token || user.role !== 'company') {
+      window.location.href = 'index.html';
+    }
+
+    // Set company name in sidebar
+    document.getElementById('company-name-display').innerHTML = `Logged in as: <strong>${user.name}</strong><br />`;
+
     const form = document.getElementById("employee-form");
     const clearFormBtn = document.getElementById("clear-form");
     const tbody = document.getElementById("employee-tbody");
@@ -803,10 +852,9 @@
     let partnerHospitalSet = new Set();
 
     function updateSummaries() {
-      // For demo, assume ~60% employees have recent checkups and ~70% have active consent.
       const total = employees.length;
-      const checkups = Math.round(total * 0.6);
-      const consent = Math.round(total * 0.7);
+      const checkups = Math.round(total * 0.6); // Simulated for now
+      const consent = Math.round(total * 0.7);  // Simulated for now
 
       summaryCheckups.textContent = total ? checkups : 0;
       summaryConsent.textContent = total ? consent : 0;
@@ -838,42 +886,68 @@
       updateSummaries();
     }
 
-    form.addEventListener("submit", function (event) {
+    async function fetchEmployees() {
+      try {
+        const response = await fetch('/api/company/employees', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (response.ok) {
+          employees = await response.json();
+          partnerHospitalSet.clear();
+          employees.forEach(emp => {
+            if (emp.partner_hospital && emp.partner_hospital !== "-") {
+              partnerHospitalSet.add(emp.partner_hospital);
+            }
+          });
+          renderTable();
+        }
+      } catch (err) {
+        console.error("Failed to fetch employees", err);
+      }
+    }
+
+    form.addEventListener("submit", async function (event) {
       event.preventDefault();
       formError.style.display = "none";
 
       const emp_id = document.getElementById("emp_id").value.trim();
       const name = document.getElementById("name").value.trim();
-      const department =
-        document.getElementById("department").value.trim() || "-";
-      const partner_hospital =
-        document.getElementById("partner_hospital").value.trim() || "-";
-      const status =
-        document.getElementById("status").value || "Active";
+      const department = document.getElementById("department").value.trim() || "-";
+      const partner_hospital = document.getElementById("partner_hospital").value.trim() || "-";
+      const status = document.getElementById("status").value || "Active";
       const email = document.getElementById("email").value.trim() || "-";
       const phone = document.getElementById("phone").value.trim() || "-";
 
       if (!emp_id || !name) {
+        formError.textContent = "Please enter Employee ID and Name.";
         formError.style.display = "block";
         return;
       }
 
-      employees.push({
-        emp_id,
-        name,
-        department,
-        partner_hospital,
-        status,
-        email,
-        phone
-      });
+      const data = { emp_id, name, department, partner_hospital, status, email, phone };
 
-      if (partner_hospital !== "-") {
-        partnerHospitalSet.add(partner_hospital);
+      try {
+        const response = await fetch('/api/company/employees', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+          form.reset();
+          fetchEmployees();
+        } else {
+          const result = await response.json();
+          formError.textContent = result.message || "Failed to add employee.";
+          formError.style.display = "block";
+        }
+      } catch (err) {
+        formError.textContent = "Server error. Try again later.";
+        formError.style.display = "block";
       }
-
-      form.reset();
-      renderTable();
     });
 
     clearFormBtn.addEventListener("click", function () {
@@ -881,7 +955,9 @@
       formError.style.display = "none";
     });
 
-    renderTable();
+    // Initial fetch
+    fetchEmployees();
   </script>
 </body>
+
 </html>

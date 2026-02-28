@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -263,7 +264,9 @@
       color: #374151;
     }
 
-    .input, select, textarea {
+    .input,
+    select,
+    textarea {
       width: 100%;
       padding: 8px 10px;
       border-radius: 12px;
@@ -275,7 +278,9 @@
       transition: border-color 0.16s, box-shadow 0.16s, background 0.16s;
     }
 
-    .input:focus, select:focus, textarea:focus {
+    .input:focus,
+    select:focus,
+    textarea:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 2px rgba(42, 157, 143, 0.15);
       background: #ffffff;
@@ -367,7 +372,8 @@
     }
 
     .error-text {
-      display: none; /* Toggle with JS when needed */
+      display: none;
+      /* Toggle with JS when needed */
       font-size: 0.78rem;
       color: var(--danger);
       margin-bottom: 6px;
@@ -378,6 +384,7 @@
         grid-template-columns: minmax(0, 1fr);
         max-width: 560px;
       }
+
       .side-illustration {
         display: none;
       }
@@ -387,18 +394,22 @@
       .layout {
         margin: 8px;
       }
+
       .left-panel {
         display: none;
       }
+
       .right-panel {
         padding: 20px 16px 18px;
       }
+
       .card {
         box-shadow: 0 16px 32px rgba(15, 23, 42, 0.22);
       }
     }
   </style>
 </head>
+
 <body>
   <div class="layout">
     <div class="left-panel">
@@ -417,7 +428,8 @@
         </div>
         <h1>Onboard your company or hospital in a few steps</h1>
         <p>
-          Choose your role, add basic organization details, and start managing employee health data with secure access for hospitals and doctors.
+          Choose your role, add basic organization details, and start managing employee health data with secure access
+          for hospitals and doctors.
         </p>
       </div>
 
@@ -446,7 +458,8 @@
       </div>
 
       <div class="side-illustration">
-        Add a soft medical illustration here to keep the signup experience friendly and aligned with your hospital theme.
+        Add a soft medical illustration here to keep the signup experience friendly and aligned with your hospital
+        theme.
       </div>
     </div>
 
@@ -475,83 +488,40 @@
           <div class="two-cols">
             <div class="field">
               <label for="first_name">First name</label>
-              <input
-                class="input"
-                type="text"
-                id="first_name"
-                name="first_name"
-                placeholder="John"
-                required
-              />
+              <input class="input" type="text" id="first_name" name="first_name" placeholder="John" required />
             </div>
             <div class="field">
               <label for="last_name">Last name</label>
-              <input
-                class="input"
-                type="text"
-                id="last_name"
-                name="last_name"
-                placeholder="Doe"
-                required
-              />
+              <input class="input" type="text" id="last_name" name="last_name" placeholder="Doe" required />
             </div>
           </div>
 
           <div class="field">
             <label for="email">Work email</label>
-            <input
-              class="input"
-              type="email"
-              id="email"
-              name="email"
-              placeholder="you@organization.com"
-              required
-            />
+            <input class="input" type="email" id="email" name="email" placeholder="you@organization.com" required />
           </div>
 
           <div class="field">
             <label for="org_name">Organization / Hospital name</label>
-            <input
-              class="input"
-              type="text"
-              id="org_name"
-              name="org_name"
-              placeholder="Acme Corp Hospital"
-              required
-            />
+            <input class="input" type="text" id="org_name" name="org_name" placeholder="Acme Corp Hospital" required />
           </div>
 
           <div class="field">
             <label for="password">Password</label>
-            <input
-              class="input"
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Create a strong password"
-              required
-            />
+            <input class="input" type="password" id="password" name="password" placeholder="Create a strong password"
+              required />
           </div>
 
           <div class="field">
             <label for="confirm_password">Confirm password</label>
-            <input
-              class="input"
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              placeholder="Re-enter password"
-              required
-            />
+            <input class="input" type="password" id="confirm_password" name="confirm_password"
+              placeholder="Re-enter password" required />
           </div>
 
           <div class="field">
             <label for="notes">Additional details (optional)</label>
-            <textarea
-              id="notes"
-              name="notes"
-              placeholder="E.g., number of employees, departments, or your primary use case."
-            ></textarea>
+            <textarea id="notes" name="notes"
+              placeholder="E.g., number of employees, departments, or your primary use case."></textarea>
           </div>
 
           <div class="helper-row">
@@ -573,12 +543,8 @@
             <span></span>
           </div>
 
-          <button
-            type="button"
-            class="btn"
-            style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;"
-            onclick="location.href='login.html'"
-          >
+          <button type="button" class="btn" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;"
+            onclick="location.href='index.html'">
             Go to sign in
           </button>
         </form>
@@ -589,5 +555,60 @@
       </div>
     </div>
   </div>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const errorText = document.getElementById('signup-error');
+      errorText.style.display = 'none';
+
+      const password = form.password.value;
+      const confirmPassword = form.confirm_password.value;
+
+      if (password !== confirmPassword) {
+        errorText.textContent = "Passwords do not match.";
+        errorText.style.display = 'block';
+        return;
+      }
+
+      const roleMap = {
+        'company_admin': 'company',
+        'hospital_admin': 'company', // Currently simplifying to company role
+        'doctor': 'doctor'
+      };
+
+      const data = {
+        name: form.first_name.value + ' ' + form.last_name.value,
+        email: form.email.value,
+        password: password,
+        role: roleMap[form.role.value] || 'worker'
+      };
+
+      try {
+        const response = await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          alert("Account created successfully! Please log in.");
+          window.location.href = 'index.html';
+        } else {
+          errorText.textContent = result.message || "Signup failed.";
+          errorText.style.display = 'block';
+        }
+      } catch (err) {
+        errorText.textContent = "Server error. Please try again later.";
+        errorText.style.display = 'block';
+      }
+    });
+  </script>
 </body>
+
 </html>
