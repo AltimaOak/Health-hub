@@ -138,11 +138,12 @@ migrant-platform/
 ▶️ How to Run the Project
 
 1. Clone or download the repository
-2. Open the project folder
-3. Run `index.html` in any modern web browser
-4. Navigate through Dashboard, Policies, and Medical Records
-
-> No backend or API keys required for demo purposes.
+2. Open the project folder in your terminal
+3. Run `npm install` to install backend dependencies
+4. Create a `.env` file in the root directory (refer to any provided environment variable templates or database configurations)
+5. Start the backend server by running `npm start`
+6. Open your web browser and navigate to `http://localhost:5000` to view the application
+7. Navigate through Dashboard, Policies, and Medical Records
 
 ---
 
