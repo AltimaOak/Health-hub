@@ -1,20 +1,33 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
+const { ref, get, query, orderByChild, equalTo } = require('firebase/database');
 
 // Get all policies
 router.get('/', async (req, res) => {
     try {
         const { state } = req.query;
-        let query = 'SELECT * FROM policies';
-        let params = [];
+        const policiesRef = ref(db, 'policies');
+        let snapshot;
 
         if (state) {
-            query += ' WHERE state = ? OR state IS NULL';
-            params.push(state);
+            // Filter by state if provided
+            const q = query(policiesRef, orderByChild('state'), equalTo(state));
+            snapshot = await get(q);
+        } else {
+            snapshot = await get(policiesRef);
         }
 
-        const [policies] = await db.query(query, params);
+        const policies = [];
+        if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+                policies.push({
+                    id: childSnapshot.key,
+                    ...childSnapshot.val()
+                });
+            });
+        }
+
         res.json(policies);
     } catch (err) {
         console.error(err);

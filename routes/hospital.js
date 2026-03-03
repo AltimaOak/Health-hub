@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../config/db');
+const { ref, get, query, orderByChild, equalTo, push, set } = require('firebase/database');
 const auth = require('../middleware/authMiddleware');
 
 // Get all doctors for the logged-in hospital
@@ -10,10 +11,32 @@ router.get('/doctors', auth, async (req, res) => {
             return res.status(403).json({ message: 'Access denied: Hospital only' });
         }
 
-        const [doctors] = await db.query(
-            'SELECT name, specialization, email, phone, status, license_no as license FROM doctors WHERE hospital_id = ? ORDER BY created_at DESC',
-            [req.user.id]
-        );
+        const doctorsRef = ref(db, 'doctors');
+        const q = query(doctorsRef, orderByChild('hospital_id'), equalTo(req.user.id));
+        const snapshot = await get(q);
+
+        const doctors = [];
+        if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                doctors.push({
+                    name: data.name,
+                    specialization: data.specialization,
+                    email: data.email,
+                    phone: data.phone,
+                    status: data.status,
+                    license: data.license_no,
+                    created_at: data.created_at
+                });
+            });
+        }
+
+        doctors.sort((a, b) => {
+            const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+            const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+            return timeB - timeA;
+        });
+
         res.json(doctors);
     } catch (err) {
         console.error(err);
@@ -30,10 +53,20 @@ router.post('/doctors', auth, async (req, res) => {
 
         const { doctor_name, specialization, doctor_email, doctor_phone, doctor_status, license_no } = req.body;
 
-        await db.query(
-            'INSERT INTO doctors (hospital_id, name, specialization, email, phone, status, license_no) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [req.user.id, doctor_name, specialization, doctor_email, doctor_phone, doctor_status, license_no]
-        );
+        const doctorsRef = ref(db, 'doctors');
+        const newDoctorRef = push(doctorsRef);
+
+        await set(newDoctorRef, {
+            hospital_id: req.user.id,
+            name: doctor_name || '',
+            specialization: specialization || '',
+            email: doctor_email || '',
+            phone: doctor_phone || '',
+            status: doctor_status || 'Active',
+            license_no: license_no || '',
+            created_at: new Date().toISOString()
+        });
+
         res.status(201).json({ message: 'Doctor added successfully' });
     } catch (err) {
         console.error(err);
@@ -48,10 +81,37 @@ router.get('/visits', auth, async (req, res) => {
             return res.status(403).json({ message: 'Access denied: Hospital only' });
         }
 
-        const [visits] = await db.query(
-            'SELECT emp_id, emp_name, doctor_name as doctor, DATE_FORMAT(visit_date, "%Y-%m-%d") as date, purpose, status FROM hospital_visits WHERE hospital_id = ? ORDER BY created_at DESC',
-            [req.user.id]
-        );
+        const visitsRef = ref(db, 'hospital_visits');
+        const q = query(visitsRef, orderByChild('hospital_id'), equalTo(req.user.id));
+        const snapshot = await get(q);
+
+        const visits = [];
+        if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+                const data = childSnapshot.val();
+                // Format date strictly to YYYY-MM-DD for the frontend display if it has time
+                let dateStr = data.visit_date;
+                if (dateStr && dateStr.includes('T')) {
+                    dateStr = dateStr.split('T')[0];
+                }
+                visits.push({
+                    emp_id: data.emp_id,
+                    emp_name: data.emp_name,
+                    doctor: data.doctor_name,
+                    date: dateStr,
+                    purpose: data.purpose,
+                    status: data.status,
+                    created_at: data.created_at
+                });
+            });
+        }
+
+        visits.sort((a, b) => {
+            const timeA = a.created_at ? new Date(a.created_at).getTime() : 0;
+            const timeB = b.created_at ? new Date(b.created_at).getTime() : 0;
+            return timeB - timeA;
+        });
+
         res.json(visits);
     } catch (err) {
         console.error(err);
@@ -68,10 +128,20 @@ router.post('/visits', auth, async (req, res) => {
 
         const { visit_emp_id, visit_emp_name, visit_doctor, visit_date, visit_purpose, visit_status } = req.body;
 
-        await db.query(
-            'INSERT INTO hospital_visits (hospital_id, emp_id, emp_name, doctor_name, visit_date, purpose, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
-            [req.user.id, visit_emp_id, visit_emp_name, visit_doctor, visit_date, visit_purpose, visit_status]
-        );
+        const visitsRef = ref(db, 'hospital_visits');
+        const newVisitRef = push(visitsRef);
+
+        await set(newVisitRef, {
+            hospital_id: req.user.id,
+            emp_id: visit_emp_id || '',
+            emp_name: visit_emp_name || '',
+            doctor_name: visit_doctor || '',
+            visit_date: visit_date || '',
+            purpose: visit_purpose || '',
+            status: visit_status || 'Active',
+            created_at: new Date().toISOString()
+        });
+
         res.status(201).json({ message: 'Visit logged successfully' });
     } catch (err) {
         console.error(err);

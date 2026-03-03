@@ -1,14 +1,20 @@
-const mysql = require('mysql2/promise');
+const { initializeApp } = require("firebase/app");
+const { getDatabase } = require("firebase/database");
 require('dotenv').config();
 
-const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
-    database: process.env.DB_NAME || 'migrant_connect',
-    waitForConnections: true,
-    connectionLimit: 10,
-    queueLimit: 0
-});
+const firebaseConfig = {
+    apiKey: "AIzaSyB50iKIjx6NRnnrMcJSaZMnmLkjBx73LdM",
+    authDomain: "hack-7bde8.firebaseapp.com",
+    databaseURL: "https://hack-7bde8-default-rtdb.firebaseio.com",
+    projectId: "hack-7bde8",
+    storageBucket: "hack-7bde8.firebasestorage.app",
+    messagingSenderId: "567145523824",
+    appId: "1:567145523824:web:8a75ced35c19f3150622b5",
+    measurementId: "G-6KJSN0GXWV"
+};
 
-module.exports = pool;
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+module.exports = db;

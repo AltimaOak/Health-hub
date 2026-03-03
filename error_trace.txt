@@ -1,0 +1,20 @@
+Error: Cannot find module 'long'
+Require stack:
+- D:\health\Employee-Health-Hub\node_modules\@grpc\proto-loader\build\src\index.js
+- D:\health\Employee-Health-Hub\node_modules\@firebase\firestore\dist\common-1ab68354.node.cjs.js
+- D:\health\Employee-Health-Hub\node_modules\@firebase\firestore\dist\index.node.cjs.js
+- D:\health\Employee-Health-Hub\node_modules\firebase\firestore\dist\index.cjs.js
+- D:\health\Employee-Health-Hub\config\db.js
+- D:\health\Employee-Health-Hub\routes\auth.js
+- D:\health\Employee-Health-Hub\server.js
+- D:\health\Employee-Health-Hub\trace.js
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1421:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1059:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1064:22)
+    at Module._load (node:internal/modules/cjs/loader:1227:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:245:24)
+    at Module.require (node:internal/modules/cjs/loader:1504:12)
+    at require (node:internal/modules/helpers:152:16)
+    at Object.<anonymous> (D:\health\Employee-Health-Hub\node_modules\@grpc\proto-loader\build\src\index.js:25:14)
+    at Module._compile (node:internal/modules/cjs/loader:1761:14)
