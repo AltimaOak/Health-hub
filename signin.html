@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in · MigrantConnect</title>
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="language-engine.js" defer></script>
+  <script src="ai-assistant.js" defer></script>
+</head>
+
+<body class="auth-body">
+  <div class="layout">
+    <div class="left-panel">
+      <div class="logo-row">
+        <div class="logo">
+          <div class="logo-mark">MC</div>
+          <span>MigrantConnect</span>
+        </div>
+        <a class="logo-link" href="index.html" data-i18n="back_to_home">Back to home</a>
+      </div>
+
+      <div class="welcome-block">
+        <div class="welcome-pill">
+          <span class="welcome-dot"></span>
+          <span data-i18n="signin_pill">Secure multi-role sign in</span>
+        </div>
+        <h1 data-i18n="signin_welcome">Welcome back to your health dashboard</h1>
+        <p data-i18n="signin_desc">
+          Sign in as a company admin, hospital admin, or doctor to manage employees, appointments, and health records in
+          one secure place.
+        </p>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge" data-i18n="badge_rbac">Role-based access control</span>
+        <span class="badge" data-i18n="badge_consent">Consent-aware records</span>
+        <span class="badge" data-i18n="badge_audit">Audit logging</span>
+      </div>
+
+      <div class="stats-card">
+        <div class="stats-title-row">
+          <span data-i18n="activity_today">Today’s activity</span>
+          <span class="live-pill">
+            <span class="live-dot"></span>
+            <span data-i18n="live">Live</span>
+          </span>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-label" data-i18n="checkups">Checkups</div>
+            <div class="stat-value">24</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label" data-i18n="recent_records">New records</div>
+            <div class="stat-value">12</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label" data-i18n="hospitals">Hospitals</div>
+            <div class="stat-value">5</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Optional illustration area: drop a medical SVG or PNG here -->
+      <div class="side-illustration" data-i18n="signin_illustration">
+        Add a calm medical illustration here to match the pastel color palette and make the sign-in page feel more
+        welcoming.
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="auth-card">
+        <div class="card-header" style="text-align: center;">
+          <h2 data-i18n="login_title">Sign in</h2>
+          <p data-i18n="login_subtitle">Use your registered email and password to access your portal.</p>
+        </div>
+
+        <div class="error-text" id="error-text" data-i18n="login_error_invalid">
+          Invalid email or password. Please try again.
+        </div>
+
+        <form action="/login" method="POST">
+          <div class="field">
+            <label for="role" data-i18n="signup_role">Sign in as</label>
+            <select id="role" name="role" required>
+              <option value="" data-i18n="select_role">Select a role</option>
+              <option value="company_admin" data-i18n="signup_company">Company admin</option>
+              <option value="hospital_admin" data-i18n="signup_hospital">Hospital admin</option>
+              <option value="doctor" data-i18n="role_doctor">Doctor</option>
+              <option value="employee" data-i18n="signup_worker">Migrant Employee</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="email" data-i18n="login_email">Email address</label>
+            <input class="input" type="email" id="email" name="email" placeholder="you@example.com" data-i18n-placeholder="login_email_placeholder" required />
+          </div>
+
+          <div class="field">
+            <label for="password" data-i18n="login_password">Password</label>
+            <input class="input" type="password" id="password" name="password" placeholder="Enter your password" data-i18n-placeholder="login_password_placeholder"
+              required />
+          </div>
+
+          <div class="helper-row">
+            <div class="checkbox-row">
+              <input type="checkbox" id="remember" name="remember" />
+              <label for="remember" style="margin-bottom:0;" data-i18n="login_remember">Keep me signed in</label>
+            </div>
+            <a href="#" class="link" data-i18n="login_forgot">Forgot password?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block" data-i18n="login_btn">
+            Continue
+          </button>
+
+          <div class="divider">
+            <span></span>
+            <span data-i18n="divider_or">Or</span>
+            <span></span>
+          </div>
+
+       <button type="button" class="btn btn-secondary" onclick="location.href='signup.html'" data-i18n="nav_signup">
+  Sign Up
+</button>
+            <span data-i18n="login_no_account">Create a new account</span>
+        </form>
+
+        <div class="card-footer">
+          <span data-i18n="signin_help">Trouble signing in?</span> <a href="#" class="link" data-i18n="contact_support">Contact support</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const errorText = document.getElementById('error-text');
+      errorText.style.display = 'none';
+
+      const email = form.email.value.trim();
+      const password = form.password.value.trim();
+      const role = form.role.value;
+
+      try {
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Store token and user data
+          localStorage.setItem('token', result.token);
+          localStorage.setItem('user', JSON.stringify(result.user));
+
+          // Redirect based on selected role vs actual user role
+          // (In a real app, you might strictly enforce this, but here we redirect to the portal based on the successfully logged-in user's role)
+          const dbRole = result.user.role;
+
+          if (dbRole === 'company') {
+            window.location.href = 'company.html';
+          } else if (dbRole === 'doctor') {
+            window.location.href = 'doctor-portal-advanced.html';
+          } else if (dbRole === 'hospital') {
+            window.location.href = 'hospital.html';
+          } else if (dbRole === 'employee' || dbRole === 'worker') {
+            window.location.href = 'employee.html';
+          } else {
+            // Fallback
+            window.location.href = 'index.html';
+          }
+        } else {
+          errorText.textContent = result.message || "Invalid credentials.";
+          errorText.style.display = 'block';
+        }
+      } catch (err) {
+        errorText.textContent = "Server error. Please try again later.";
+        errorText.style.display = 'block';
+      }
+    });
+  </script>
+</body>
+
+</html>

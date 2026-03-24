@@ -4,35 +4,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hospital Portal · Employee Health Connect</title>
+  <title>Hospital Portal · MigrantConnect</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="language-engine.js" defer></script>
+  <script src="ai-assistant.js" defer></script>
 </head>
 
 <body class="dashboard-body">
   <aside class="sidebar">
     <div>
       <div class="logo">
-        <div class="logo-mark">EH</div>
-        <span>Hospital Portal</span>
+        <div class="logo-mark">MC</div>
+        <span data-i18n="hospital_portal">Hospital Portal</span>
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
         <li class="nav-item active" onclick="location.href='hospital.html'" style="cursor:pointer">
-          <span class="label">Hospital profile</span>
-          <small>Basic info</small>
+          <span class="label" data-i18n="hospital_profile">Hospital profile</span>
+          <small data-i18n="overview">Basic info</small>
         </li>
         <li class="nav-item">
-          <span class="label">Doctor onboarding</span>
-          <small>Doctors</small>
+          <span class="label" data-i18n="doctor_onboarding">Doctor onboarding</span>
+          <small data-i18n="nav_doctor">Doctors</small>
         </li>
         <li class="nav-item">
-          <span class="label">Visit history</span>
-          <small>Employees</small>
+          <span class="label" data-i18n="visit_history">Visit history</span>
+          <small data-i18n="role_employee">Employees</small>
         </li>
       </ul>
     </div>
 
-    <div class="sidebar-footer">
+    <div class="sidebar-footer" id="hospital-name-display">
       Logged in as: <strong>Hospital Admin</strong><br />
       <span class="badge-pill">
         <span class="badge-dot"></span>
@@ -44,16 +47,16 @@
   <main class="main">
     <div class="top-bar">
       <div class="top-bar-left">
-        <div class="top-title">For Hospitals</div>
+        <div class="top-title" data-i18n="role_hospital">For Hospitals</div>
         <div class="top-subtitle">
           Onboard your hospital, manage doctors, and view employee visits connected to your organization.
         </div>
       </div>
       <div class="top-bar-right">
-        <button class="btn btn-outline" onclick="location.href='index.html'">
+        <button class="btn btn-outline" onclick="location.href='index.html'" data-i18n="nav_about">
           Home
         </button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" data-i18n="visit_history">
           Export visit log
         </button>
       </div>
@@ -64,25 +67,25 @@
       <section>
         <!-- Hospital profile -->
         <div class="card">
-          <div class="card-header-flex"><h2>Hospital profile</h2><span>Update your hospital details for company partners and doctors.</span>
+          <div class="card-header-flex"><h2 data-i18n="hospital_profile">Hospital profile</h2><span>Update your hospital details for company partners and doctors.</span>
           </div>
           <div class="divider"></div>
 
           <form id="hospital-profile-form">
             <div class="field">
-              <label for="hospital_name">Hospital name</label>
+              <label for="hospital_name" data-i18n="signup_org">Hospital name</label>
               <input class="input" type="text" id="hospital_name" name="hospital_name" placeholder="City Care Hospital"
                 value="City Care Hospital" />
             </div>
 
             <div class="two-cols">
               <div class="field">
-                <label for="registration_no">Registration number</label>
+                <label for="registration_no" data-i18n="registration_no">Registration number</label>
                 <input class="input" type="text" id="registration_no" name="registration_no" placeholder="REG-123456"
                   value="REG-123456" />
               </div>
               <div class="field">
-                <label for="contact_email">Contact email</label>
+                <label for="contact_email" data-i18n="email">Contact email</label>
                 <input class="input" type="email" id="contact_email" name="contact_email"
                   placeholder="admin@citycarehospital.com" value="admin@citycarehospital.com" />
               </div>
@@ -90,7 +93,7 @@
 
             <div class="two-cols">
               <div class="field">
-                <label for="phone">Phone</label>
+                <label for="phone" data-i18n="phone">Phone</label>
                 <input class="input" type="tel" id="phone" name="phone" placeholder="+91 98765 43210"
                   value="+91 98765 43210" />
               </div>
@@ -108,10 +111,10 @@
             </div>
 
             <div class="btn-row">
-              <button type="button" class="btn btn-primary">
+              <button type="button" class="btn btn-primary" data-i18n="save_profile">
                 Save profile
               </button>
-              <button type="button" class="btn btn-outline" onclick="location.href='hospital.html'">
+              <button type="button" class="btn btn-outline" onclick="location.href='hospital.html'" data-i18n="clear_form">
                 Reset
               </button>
             </div>
@@ -126,19 +129,19 @@
 
         <!-- Doctor onboarding -->
         <div class="card" style="margin-top:12px;">
-          <div class="card-header-flex"><h2>Doctor onboarding</h2><span>Add and manage doctors working under this hospital.</span>
+          <div class="card-header-flex"><h2 data-i18n="doctor_onboarding">Doctor onboarding</h2><span>Add and manage doctors working under this hospital.</span>
           </div>
           <div class="divider"></div>
 
           <form id="doctor-form">
             <div class="two-cols">
               <div class="field">
-                <label for="doctor_name">Doctor name</label>
+                <label for="doctor_name" data-i18n="doctor_name">Doctor name</label>
                 <input class="input" type="text" id="doctor_name" name="doctor_name" placeholder="Dr. A. Sharma"
                   required />
               </div>
               <div class="field">
-                <label for="specialization">Specialization</label>
+                <label for="specialization" data-i18n="specialization">Specialization</label>
                 <input class="input" type="text" id="specialization" name="specialization"
                   placeholder="Cardiologist / Physician" />
               </div>
@@ -165,16 +168,16 @@
                 </select>
               </div>
               <div class="field">
-                <label for="license_no">Registration / License no.</label>
+                <label for="license_no" data-i18n="license_no">Registration / License no.</label>
                 <input class="input" type="text" id="license_no" name="license_no" placeholder="MCI-12345" />
               </div>
             </div>
 
             <div class="btn-row">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" data-i18n="add_doctor">
                 Add doctor
               </button>
-              <button type="button" class="btn btn-outline" id="clear-doctor-form">
+              <button type="button" class="btn btn-outline" id="clear-doctor-form" data-i18n="clear_form">
                 Clear form
               </button>
             </div>
@@ -208,14 +211,14 @@
       <!-- Right: Visit history + small summary -->
       <section>
         <div class="card">
-          <div class="card-header-flex"><h2>Visit history</h2><span>List of employee visits recorded under this hospital.</span>
+          <div class="card-header-flex"><h2 data-i18n="visit_history">Visit history</h2><span>List of employee visits recorded under this hospital.</span>
           </div>
           <div class="divider"></div>
 
           <form id="visit-form">
             <div class="two-cols">
               <div class="field">
-                <label for="visit_emp_id">Employee ID</label>
+                <label for="visit_emp_id" data-i18n="emp_id">Employee ID</label>
                 <input class="input" type="text" id="visit_emp_id" name="visit_emp_id" placeholder="EMP001" required />
               </div>
               <div class="field">
@@ -237,7 +240,7 @@
 
             <div class="two-cols">
               <div class="field">
-                <label for="visit_purpose">Purpose</label>
+                <label for="visit_purpose" data-i18n="table_reason">Purpose</label>
                 <input class="input" type="text" id="visit_purpose" name="visit_purpose"
                   placeholder="Annual health checkup / Consultation" />
               </div>
@@ -285,28 +288,28 @@
         </div>
 
         <div class="card" style="margin-top:12px;">
-          <div class="card-header-flex"><h2>Hospital summary</h2><span>Quick snapshot of doctors and visits.</span>
+          <div class="card-header-flex"><h2 data-i18n="hospital_summary">Hospital summary</h2><span>Quick snapshot of doctors and visits.</span>
           </div>
           <div class="divider"></div>
 
           <div class="summary-grid">
             <div class="summary-card">
-              <div class="summary-title">Total doctors</div>
+              <div class="summary-title" data-i18n="total_doctors">Total doctors</div>
               <div class="summary-value" id="summary-doctors">0</div>
               <div class="summary-sub">Onboarded in this hospital</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Online doctors</div>
+              <div class="summary-title" data-i18n="online_doctors">Online doctors</div>
               <div class="summary-value" id="summary-online">0</div>
               <div class="summary-sub">Status marked as “Online”</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Total visits</div>
+              <div class="summary-title" data-i18n="total_visits">Total visits</div>
               <div class="summary-value" id="summary-visits">0</div>
               <div class="summary-sub">Logged in visit history</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Completed visits</div>
+              <div class="summary-title" data-i18n="completed_visits">Completed visits</div>
               <div class="summary-value" id="summary-completed">0</div>
               <div class="summary-sub">Marked as “Completed”</div>
             </div>
@@ -337,6 +340,12 @@
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!token || user.role !== 'hospital') {
       window.location.href = 'index.html';
+    }
+
+    // Set hospital name in sidebar
+    document.getElementById('hospital-name-display').innerHTML = `Logged in as: <strong>${user.name}</strong><br />${user.organization ? `<small>${user.organization}</small>` : ''}`;
+    if (user.organization) {
+      document.getElementById('hospital_name').value = user.organization;
     }
 
     // Doctor onboarding logic

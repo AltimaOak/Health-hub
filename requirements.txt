@@ -1,0 +1,8 @@
+flask
+flask-cors
+firebase-admin
+pycryptodome
+google-generativeai
+python-dotenv
+requests
+bcrypt

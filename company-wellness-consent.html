@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wellness & Consent · Company Portal</title>
+  <title>Wellness & Consent · MigrantConnect</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="dashboard-body">
   <aside class="sidebar">
     <div>
       <div class="logo">
-        <div class="logo-mark">EH</div>
-        <span>Company Portal</span>
+        <div class="logo-mark">MC</div>
+        <span data-i18n="company_portal">Company Portal</span>
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
         <li class="nav-item" onclick="location.href='company.html'" style="cursor:pointer">
-          <span class="label">Employee registry</span>
-          <small>Back</small>
+          <span class="label" data-i18n="employee_registry">Employee registry</span>
+          <small data-i18n="back">Back</small>
         </li>
         <li class="nav-item active" onclick="location.href='company-wellness-consent.html'" style="cursor:pointer">
-          <span class="label">Wellness & consent</span>
-          <small>Analytics</small>
+          <span class="label" data-i18n="wellness_and_consent">Wellness & consent</span>
+          <small data-i18n="analytics">Analytics</small>
         </li>
       </ul>
     </div>
@@ -38,16 +39,16 @@
   <main class="main">
     <div class="top-bar">
       <div class="top-bar-left">
-        <div class="top-title">Wellness and risk overview</div>
+        <div class="top-title" data-i18n="risk_overview">Wellness and risk overview</div>
         <div class="top-subtitle">
           Anonymous insights into employee health trends and fine-grained control over hospital access and consent policies.[web:191][web:120]
         </div>
       </div>
       <div class="top-bar-right">
-        <button class="btn btn-outline" onclick="location.href='company.html'">
+        <button class="btn btn-outline" onclick="location.href='company.html'" data-i18n="employee_registry">
           Employee registry
         </button>
-        <button class="btn btn-primary" id="export-report">
+        <button class="btn btn-primary" id="export-report" data-i18n="export_report">
           Export compliance report
         </button>
       </div>
@@ -56,15 +57,15 @@
     <div class="content-grid">
       <!-- Left: Wellness charts & aggregated risk -->
       <section class="card">
-        <div class="card-header-flex"><h2>Wellness dashboard</h2><span>High-level view of checkups and risk categories (demo data).</span>
+        <div class="card-header-flex"><h2 data-i18n="wellness_dashboard">Wellness dashboard</h2><span data-i18n="wellness_desc">High-level view of checkups and risk categories (demo data).</span>
         </div>
         <div class="divider"></div>
 
         <div class="summary-grid">
           <div class="summary-card">
-            <div class="summary-title">Total employees</div>
+            <div class="summary-title" data-i18n="total_employees">Total employees</div>
             <div class="summary-value" id="metric-total">120</div>
-            <div class="summary-sub">Across all departments</div>
+            <div class="summary-sub" data-i18n="across_depts">Across all departments</div>
           </div>
           <div class="summary-card">
             <div class="summary-title">Recent checkups (12 months)</div>
@@ -113,14 +114,14 @@
       <!-- Right: Policy & consent management + export info -->
       <section>
         <div class="card">
-          <div class="card-header-flex"><h2>Policy & consent management</h2><span>Configure preferred hospitals and what data each can view.</span>
+          <div class="card-header-flex"><h2 data-i18n="policy_governance">Policy & consent management</h2><span data-i18n="privacy_controls">Configure preferred hospitals and what data each can view.</span>
           </div>
           <div class="divider"></div>
 
           <form id="policy-form">
             <div class="two-cols">
               <div class="field">
-                <label for="hospital_name">Preferred hospital name</label>
+                <label for="hospital_name" data-i18n="preferred_hospital">Preferred hospital name</label>
                 <input
                   class="input"
                   type="text"
@@ -130,7 +131,7 @@
                 />
               </div>
               <div class="field">
-                <label for="scope">Data access scope</label>
+                <label for="scope" data-i18n="data_access_scope">Data access scope</label>
                 <select id="scope" name="scope" class="input">
                   <option value="Fitness-for-duty only">Fitness-for-duty only</option>
                   <option value="Summarized clinical info">Summarized clinical info</option>
@@ -141,7 +142,7 @@
 
             <div class="two-cols">
               <div class="field">
-                <label for="validity">Policy validity</label>
+                <label for="validity" data-i18n="policy_validity">Policy validity</label>
                 <select id="validity" name="validity" class="input">
                   <option value="Until revoked">Until revoked</option>
                   <option value="12 months">12 months</option>
@@ -149,7 +150,7 @@
                 </select>
               </div>
               <div class="field">
-                <label for="policy_notes">Notes (internal)</label>
+                <label for="policy_notes" data-i18n="notes">Notes (internal)</label>
                 <input
                   class="input"
                   type="text"
@@ -161,10 +162,10 @@
             </div>
 
             <div class="btn-row">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" data-i18n="add_update_policy">
                 Add / update policy
               </button>
-              <button type="button" class="btn btn-outline" id="clear-policy-form">
+              <button type="button" class="btn btn-outline" id="clear-policy-form" data-i18n="clear_form">
                 Clear form
               </button>
             </div>
@@ -174,11 +175,11 @@
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Hospital</th>
-                  <th>Scope</th>
-                  <th>Validity</th>
-                  <th>Notes</th>
+                  <th data-i18n="id">#</th>
+                  <th data-i18n="hospital">Hospital</th>
+                  <th data-i18n="scope">Scope</th>
+                  <th data-i18n="validity">Validity</th>
+                  <th data-i18n="notes">Notes</th>
                 </tr>
               </thead>
               <tbody id="policy-tbody">
@@ -195,7 +196,7 @@
         </div>
 
         <div class="card" style="margin-top:12px;">
-          <div class="card-header-flex"><h2>Compliance report exports</h2><span>Summaries of consents, visits, and access logs for audits.[web:120][web:192]</span>
+          <div class="card-header-flex"><h2 data-i18n="compliance_reports">Compliance report exports</h2><span data-i18n="compliance_desc">Summaries of consents, visits, and access logs for audits.[web:120][web:192]</span>
           </div>
           <div class="divider"></div>
 
@@ -210,7 +211,7 @@
             <li>Access logs: how many times hospitals/doctors accessed employee records.</li>
           </ul>
 
-          <button class="btn btn-primary" style="margin-top:8px;" id="download-dummy">
+          <button class="btn btn-primary" style="margin-top:8px;" id="download-dummy" data-i18n="download_demo_csv">
             Download demo CSV
           </button>
 

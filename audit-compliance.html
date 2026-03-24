@@ -3,25 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Audit Trail & Compliance · Employee Health Connect</title>
+  <title>Audit Trail & Compliance · MigrantConnect</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="dashboard-body">
   <aside class="sidebar">
     <div>
       <div class="logo">
-        <div class="logo-mark">EH</div>
-        <span>Admin · Compliance</span>
+        <div class="logo-mark">MC</div>
+        <span data-i18n="compliance_admin">Admin · Compliance</span>
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
         <li class="nav-item active" onclick="location.href='audit-compliance.html'" style="cursor:pointer">
-          <span class="label">Audit trail</span>
-          <small>Logs</small>
+          <span class="label" data-i18n="audit_trail">Audit trail</span>
+          <small data-i18n="logs">Logs</small>
         </li>
         <li class="nav-item">
-          <span class="label">Reports</span>
-          <small>Exports</small>
+          <span class="label" data-i18n="reports">Reports</span>
+          <small data-i18n="reports">Exports</small>
         </li>
       </ul>
     </div>
@@ -38,27 +39,25 @@
   <main class="main">
     <div class="top-bar">
       <div class="top-bar-left">
-        <div class="top-title">Audit trail and compliance</div>
-        <div class="top-subtitle">
+        <div class="top-title" data-i18n="audit_trail">Audit trail and compliance</div>
+        <div class="top-subtitle" data-i18n="footer_desc">
           Track CREATE, VIEW, and UPDATE activity with filters, exports, and a simple review workflow.[web:222][web:231]
         </div>
       </div>
       <div class="top-bar-right">
-        <button class="btn btn-outline" onclick="location.href='index.html'">
+        <button class="btn btn-outline" onclick="location.href='index.html'" data-i18n="nav_about">
           Home
         </button>
-        <button class="btn btn-primary" id="export-csv">
+        <button class="btn btn-primary" id="export-csv" data-i18n="export_csv">
           Export filtered logs (CSV)
         </button>
-      </div>
     </div>
 
     <div class="content-grid">
       <!-- Left: audit table + filters -->
       <section class="card">
-        <div class="card-header-flex"><h2>Audit trail</h2><span>0 events</span>
+        <div class="card-header-flex"><h2 data-i18n="audit_trail">Audit trail</h2><span data-i18n="events_count">0 events</span>
         </div>
-        <div class="divider"></div>
 
         <div class="filters-row">
           <div class="field">
@@ -105,14 +104,14 @@
           <table>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Time</th>
-                <th>User</th>
-                <th>Action</th>
-                <th>Employee</th>
-                <th>IP / Device</th>
-                <th>Purpose</th>
-                <th>Reviewed</th>
+                <th data-i18n="id">#</th>
+                <th data-i18n="timestamp">Time</th>
+                <th data-i18n="user">User</th>
+                <th data-i18n="action">Action</th>
+                <th data-i18n="employee">Employee</th>
+                <th data-i18n="device">IP / Device</th>
+                <th data-i18n="purpose">Purpose</th>
+                <th data-i18n="table_status">Reviewed</th>
               </tr>
             </thead>
             <tbody id="audit-tbody">
@@ -131,23 +130,23 @@
       <!-- Right: summaries + review workflow -->
       <section>
         <div class="card">
-          <div class="card-header-flex"><h2>Audit summaries</h2><span>Quick snapshot for recent period.</span>
+          <div class="card-header-flex"><h2 data-i18n="audit_summaries">Audit summaries</h2><span data-i18n="snapshot_desc">Quick snapshot for recent period.</span>
           </div>
           <div class="divider"></div>
 
           <div class="summary-grid">
             <div class="summary-card">
-              <div class="summary-title">Total events</div>
+              <div class="summary-title" data-i18n="total_events">Total events</div>
               <div class="summary-value" id="sum-total">0</div>
               <div class="summary-sub">In current filter window</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">VIEW actions</div>
+              <div class="summary-title" data-i18n="view_actions">VIEW actions</div>
               <div class="summary-value" id="sum-view">0</div>
               <div class="summary-sub">Read access to records</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">CREATE / UPDATE</div>
+              <div class="summary-title" data-i18n="write_actions">CREATE / UPDATE</div>
               <div class="summary-value" id="sum-write">0</div>
               <div class="summary-sub">Changes to data</div>
             </div>
@@ -155,12 +154,12 @@
 
           <div class="summary-grid" style="margin-top:8px;">
             <div class="summary-card">
-              <div class="summary-title">Reviewed events</div>
+              <div class="summary-title" data-i18n="reviewed_events">Reviewed events</div>
               <div class="summary-value" id="sum-reviewed">0</div>
               <div class="summary-sub">Marked as reviewed</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Flagged as suspicious</div>
+              <div class="summary-title" data-i18n="suspicious_events">Flagged as suspicious</div>
               <div class="summary-value" id="sum-flagged">0</div>
               <div class="summary-sub">Require follow-up</div>
             </div>
@@ -173,7 +172,7 @@
         </div>
 
         <div class="card" style="margin-top:12px;">
-          <div class="card-header-flex"><h2>Audit review workflow</h2><span>Mark events as reviewed and add comments for suspicious activity.[web:224][web:227]</span>
+          <div class="card-header-flex"><h2 data-i18n="audit_review">Audit review workflow</h2><span data-i18n="review_wf_desc">Mark events as reviewed and add comments for suspicious activity.[web:224][web:227]</span>
           </div>
           <div class="divider"></div>
 
@@ -190,14 +189,14 @@
 
             <form id="review-form" style="margin-top:8px;display:none;">
               <div class="field">
-                <label>Status</label>
+                <label data-i18n="table_status">Status</label>
                 <select id="review-status" class="input">
                   <option value="Reviewed - OK">Reviewed - OK</option>
                   <option value="Reviewed - Suspicious">Reviewed - Suspicious</option>
                 </select>
               </div>
               <div class="field">
-                <label for="review-notes">Reviewer comments</label>
+                <label for="review-notes" data-i18n="reviewer_comments">Reviewer comments</label>
                 <textarea
                   id="review-notes"
                   class="input"
@@ -205,10 +204,10 @@
                 ></textarea>
               </div>
               <div class="btn-row">
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" data-i18n="save_review">
                   Save review
                 </button>
-                <button type="button" class="btn btn-outline" id="clear-review">
+                <button type="button" class="btn btn-outline" id="clear-review" data-i18n="clear_form">
                   Clear
                 </button>
               </div>

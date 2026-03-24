@@ -4,39 +4,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Company Portal · Employee Health Connect</title>
+  <title>Company Portal · MigrantConnect</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="language-engine.js" defer></script>
+  <script src="ai-assistant.js" defer></script>
 </head>
 
 <body class="dashboard-body">
   <aside class="sidebar">
     <div>
       <div class="logo">
-        <div class="logo-mark">EH</div>
-        <span>Company Portal</span>
+        <div class="logo-mark">MC</div>
+        <span data-i18n="company_portal">Company Portal</span>
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
         <li class="nav-item active" onclick="location.href='company.html'" style="cursor:pointer">
-          <span class="label">Employee registry</span>
-          <small>View & add</small>
+          <span class="label" data-i18n="employee_registry">Employee registry</span>
+          <small data-i18n="add_view">View & add</small>
         </li>
         <li class="nav-item">
-          <span class="label">Health summaries</span>
-          <small>Overview</small>
+          <span class="label" data-i18n="health_summaries">Health summaries</span>
+          <small data-i18n="overview">Overview</small>
         </li>
         <li class="nav-item">
-          <span class="label">Consent dashboard</span>
-          <small>Hospitals</small>
+          <span class="label" data-i18n="consent_dashboard">Consent dashboard</span>
+          <small data-i18n="hospitals">Hospitals</small>
         </li>
       </ul>
     </div>
 
-    <div class="sidebar-footer">
+    <div class="sidebar-footer" id="company-name-display">
       Logged in as: <strong>Company Admin</strong><br />
       <span class="badge-pill">
         <span class="badge-dot"></span>
-        Wellness program active
+        <span data-i18n="wellness_active">Wellness program active</span>
       </span>
     </div>
   </aside>
@@ -44,16 +47,16 @@
   <main class="main">
     <div class="top-bar">
       <div class="top-bar-left">
-        <div class="top-title">For Companies</div>
-        <div class="top-subtitle">
+        <div class="top-title" data-i18n="for_companies">For Companies</div>
+        <div class="top-subtitle" data-i18n="company_subtitle">
           Register employees, assign partner hospitals, and monitor wellness with data privacy and consent in mind.
         </div>
       </div>
       <div class="top-bar-right">
-        <button class="btn btn-outline" onclick="location.href='index.html'">
+        <button class="btn btn-outline" onclick="location.href='index.html'" data-i18n="nav_about">
           Home
         </button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" data-i18n="export_report">
           Export report
         </button>
       </div>
@@ -62,35 +65,35 @@
     <div class="content-grid">
       <!-- Left: Employee registry -->
       <section class="card">
-        <div class="card-header-flex"><h2>Employee registry</h2><span>0 employees</span>
+        <div class="card-header-flex"><h2 data-i18n="employee_registry">Employee registry</h2><span data-i18n="employees_count">0 employees</span>
         </div>
         <div class="divider"></div>
 
         <form id="employee-form">
           <div class="field">
-            <label for="emp_id">Employee ID</label>
+            <label for="emp_id" data-i18n="emp_id">Employee ID</label>
             <input class="input" type="text" id="emp_id" name="emp_id" placeholder="EMP001" required />
           </div>
 
           <div class="two-cols">
             <div class="field">
-              <label for="name">Full name</label>
+              <label for="name" data-i18n="full_name">Full name</label>
               <input class="input" type="text" id="name" name="name" placeholder="John Doe" required />
             </div>
             <div class="field">
-              <label for="department">Department</label>
+              <label for="department" data-i18n="department">Department</label>
               <input class="input" type="text" id="department" name="department" placeholder="IT / HR / Finance" />
             </div>
           </div>
 
           <div class="two-cols">
             <div class="field">
-              <label for="partner_hospital">Partner hospital</label>
+              <label for="partner_hospital" data-i18n="partner_hospital">Partner hospital</label>
               <input class="input" type="text" id="partner_hospital" name="partner_hospital"
                 placeholder="City Care Hospital" />
             </div>
             <div class="field">
-              <label for="status">Status</label>
+              <label for="status" data-i18n="table_status">Status</label>
               <select id="status" name="status" class="input">
                 <option value="Active">Active</option>
                 <option value="On Leave">On Leave</option>
@@ -101,20 +104,20 @@
 
           <div class="two-cols">
             <div class="field">
-              <label for="email">Email</label>
+              <label for="email" data-i18n="email">Email</label>
               <input class="input" type="email" id="email" name="email" placeholder="john.doe@example.com" />
             </div>
             <div class="field">
-              <label for="phone">Phone</label>
+              <label for="phone" data-i18n="phone">Phone</label>
               <input class="input" type="tel" id="phone" name="phone" placeholder="+91 98765 43210" />
             </div>
           </div>
 
           <div class="btn-row">
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class="btn btn-primary" data-i18n="add_employee">
               Add employee
             </button>
-            <button type="button" class="btn btn-outline" id="clear-form">
+            <button type="button" class="btn btn-outline" id="clear-form" data-i18n="clear_form">
               Clear form
             </button>
           </div>
@@ -148,28 +151,28 @@
       <!-- Right: Health summaries & consent dashboard -->
       <section>
         <div class="card">
-          <div class="card-header-flex"><h2>Health summaries</h2><span>High-level view of employee wellness indicators.</span>
+          <div class="card-header-flex"><h2 data-i18n="health_summaries">Health summaries</h2><span data-i18n="overview">High-level view of employee wellness indicators.</span>
           </div>
           <div class="divider"></div>
 
           <div class="summary-grid">
             <div class="summary-card">
-              <div class="summary-title">Employees with recent checkup</div>
+              <div class="summary-title" data-i18n="employees_checkup">Employees with recent checkup</div>
               <div class="summary-value" id="summary-checkups">0</div>
-              <div class="summary-sub">Last 12 months</div>
+              <div class="summary-sub" data-i18n="last_12_months">Last 12 months</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Employees with active consent</div>
+              <div class="summary-title" data-i18n="employees_consent">Employees with active consent</div>
               <div class="summary-value" id="summary-consent">0</div>
               <div class="summary-sub">For at least one hospital</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Partner hospitals</div>
+              <div class="summary-title" data-i18n="summary_hospitals">Partner hospitals</div>
               <div class="summary-value" id="summary-hospitals">0</div>
               <div class="summary-sub">Assigned across employees</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Overall wellness index</div>
+              <div class="summary-title" data-i18n="wellness_index">Overall wellness index</div>
               <div class="summary-value">–</div>
               <div class="summary-sub">
                 Placeholder for your actual analytics / scoring
@@ -178,14 +181,14 @@
           </div>
 
           <div class="chips-row">
-            <span class="chip">Employee registry</span>
-            <span class="chip">Health summaries</span>
-            <span class="chip">Consent dashboard</span>
+            <span class="chip" data-i18n="employee_registry">Employee registry</span>
+            <span class="chip" data-i18n="health_summaries">Health summaries</span>
+            <span class="chip" data-i18n="consent_dashboard">Consent dashboard</span>
           </div>
         </div>
 
         <div class="card" style="margin-top:12px;">
-          <div class="card-header-flex"><h2>Consent dashboard</h2><span>Track who has granted access to which hospital.</span>
+          <div class="card-header-flex"><h2 data-i18n="consent_dashboard">Consent dashboard</h2><span data-i18n="hospitals">Track who has granted access to which hospital.</span>
           </div>
           <div class="divider"></div>
 
@@ -198,10 +201,10 @@
             <table>
               <thead>
                 <tr>
-                  <th>Employee</th>
-                  <th>Hospital</th>
-                  <th>Consent status</th>
-                  <th>Valid till</th>
+                  <th data-i18n="role_employee">Employee</th>
+                  <th data-i18n="table_hospital">Hospital</th>
+                  <th data-i18n="consent_dashboard">Consent status</th>
+                  <th data-i18n="valid_till">Valid till</th>
                 </tr>
               </thead>
               <tbody id="consent-tbody">
@@ -211,7 +214,7 @@
                   <td>
                     <span class="badge-consent granted">
                       <span class="status-dot"></span>
-                      Granted
+                      <span data-i18n="granted">Granted</span>
                     </span>
                   </td>
                   <td>31 Dec 2026</td>
@@ -222,7 +225,7 @@
                   <td>
                     <span class="badge-consent pending">
                       <span class="status-dot"></span>
-                      Pending
+                      <span data-i18n="pending">Pending</span>
                     </span>
                   </td>
                   <td>Awaiting signature</td>
@@ -233,7 +236,7 @@
                   <td>
                     <span class="badge-consent revoked">
                       <span class="status-dot"></span>
-                      Revoked
+                      <span data-i18n="revoked">Revoked</span>
                     </span>
                   </td>
                   <td>Revoked 10 Jan 2026</td>
@@ -264,7 +267,7 @@
     }
 
     // Set company name in sidebar
-    document.getElementById('company-name-display').innerHTML = `Logged in as: <strong>${user.name}</strong><br />`;
+    document.getElementById('company-name-display').innerHTML = `Logged in as: <strong>${user.name}</strong><br />${user.organization ? `<small>${user.organization}</small>` : ''}`;
 
     const form = document.getElementById("employee-form");
     const clearFormBtn = document.getElementById("clear-form");

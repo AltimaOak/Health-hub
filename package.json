@@ -1,7 +1,7 @@
 {
-  "name": "employee-health-hub",
+  "name": "migrant-connect",
   "version": "1.0.0",
-  "description": "🌍 MigrantConnect",
+  "description": "🌍 MigrantConnect - Empowering Journeys. Bridging Care.",
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
@@ -26,7 +26,6 @@
     "express": "^5.2.1",
     "firebase": "^12.10.0",
     "jsonwebtoken": "^9.0.3",
-    "long": "^5.3.2",
-    "mysql2": "^3.18.2"
+    "long": "^5.3.2"
   }
 }

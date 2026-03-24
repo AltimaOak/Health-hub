@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Doctor Portal · Advanced · Employee Health Connect</title>
+  <title>Doctor Portal · Advanced · MigrantConnect</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
@@ -12,18 +12,18 @@
   <aside class="sidebar">
     <div>
       <div class="logo">
-        <div class="logo-mark">EH</div>
-        <span>Doctor Portal</span>
+        <div class="logo-mark">MC</div>
+        <span data-i18n="doctor_portal">Doctor Portal</span>
       </div>
       <div class="sidebar-label">Navigation</div>
       <ul class="nav-list">
         <li class="nav-item active" onclick="location.href='doctor-portal-advanced.html'" style="cursor:pointer">
-          <span class="label">Patient list</span>
-          <small>Vitals & notes</small>
+          <span class="label" data-i18n="patient_list">Patient list</span>
+          <small data-i18n="vitals_notes">Vitals & notes</small>
         </li>
         <li class="nav-item">
-          <span class="label">Timeline view</span>
-          <small>History</small>
+          <span class="label" data-i18n="timeline_view">Timeline view</span>
+          <small data-i18n="overview">History</small>
         </li>
       </ul>
     </div>
@@ -32,7 +32,7 @@
       <span id="doc-name">Logged in as: <strong>Dr. A. Sharma</strong><br /></span>
       <span class="badge-pill">
         <span class="badge-dot"></span>
-        On duty · City Care Hospital
+        <span id="doc-hospital-name">On duty · City Care Hospital</span>
       </span>
     </div>
   </aside>
@@ -40,16 +40,16 @@
   <main class="main">
     <div class="top-bar">
       <div class="top-bar-left">
-        <div class="top-title">For Doctors · Advanced view</div>
+        <div class="top-title" data-i18n="role_doctor">For Doctors · Advanced view</div>
         <div class="top-subtitle">
           Quick vitals, structured diagnoses (ICD), and a timeline view of visits and health records.[web:64][web:210]
         </div>
       </div>
       <div class="top-bar-right">
-        <button class="btn btn-outline" onclick="location.href='index.html'">
+        <button class="btn btn-outline" onclick="location.href='index.html'" data-i18n="nav_about">
           Home
         </button>
-        <button class="btn btn-primary">
+        <button class="btn btn-primary" data-i18n="today_schedule">
           Today’s schedule
         </button>
       </div>
@@ -59,20 +59,20 @@
       <!-- Left: Patient list + vitals + structured record -->
       <section>
         <div class="card">
-          <div class="card-header-flex"><h2>Patient list & vitals</h2><span>0 patients assigned</span>
+          <div class="card-header-flex"><h2 data-i18n="patient_list">Patient list & vitals</h2><span data-i18n="patients_assigned">0 patients assigned</span>
           </div>
           <div class="divider"></div>
 
           <div class="two-cols">
             <div class="field">
-              <label for="patient_search">Search patients</label>
-              <input class="input" type="text" id="patient_search"
+              <label for="patient_search" data-i18n="search_patients">Search patients</label>
+              <input class="input" type="text" id="patient_search" data-i18n-placeholder="search_placeholder"
                 placeholder="Search by name, employee ID, or company..." />
             </div>
             <div class="field">
-              <label for="acuity_filter">Filter</label>
+              <label for="acuity_filter" data-i18n="acuity_filter">Filter</label>
               <select id="acuity_filter" class="input">
-                <option value="">All</option>
+                <option value="" data-i18n="all">All</option>
                 <option value="HighBP">High BP</option>
                 <option value="FollowUp">Follow-up required</option>
               </select>
@@ -83,14 +83,14 @@
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Employee</th>
-                  <th>Company</th>
-                  <th>BP</th>
-                  <th>HR</th>
-                  <th>BMI</th>
-                  <th>Status</th>
-                  <th>Last visit</th>
+                  <th data-i18n="id">#</th>
+                  <th data-i18n="employee">Employee</th>
+                  <th data-i18n="company_name">Company</th>
+                  <th data-i18n="bp">BP</th>
+                  <th data-i18n="hr">HR</th>
+                  <th data-i18n="bmi">BMI</th>
+                  <th data-i18n="table_status">Status</th>
+                  <th data-i18n="last_visit">Last visit</th>
                 </tr>
               </thead>
               <tbody id="patient-tbody">
@@ -107,19 +107,19 @@
         </div>
 
         <div class="card" style="margin-top:12px;">
-          <div class="card-header-flex"><h2>Health record (structured)</h2><span>ICD code, diagnosis, plan, and vitals for the current encounter.[web:210][web:214]</span>
+          <div class="card-header-flex"><h2 data-i18n="health_record">Health record (structured)</h2><span data-i18n="record_desc">ICD code, diagnosis, plan, and vitals for the current encounter.[web:210][web:214]</span>
           </div>
           <div class="divider"></div>
 
           <form id="record-form">
             <div class="two-cols">
               <div class="field">
-                <label for="record_emp_id">Employee ID</label>
-                <input class="input" type="text" id="record_emp_id" name="record_emp_id" placeholder="EMP001"
+                <label for="record_emp_id" data-i18n="emp_id">Employee ID</label>
+                <input class="input" type="text" id="record_emp_id" name="record_emp_id" data-i18n-placeholder="emp_id_placeholder" placeholder="EMP001"
                   required />
               </div>
               <div class="field">
-                <label for="record_icd">ICD code</label>
+                <label for="record_icd" data-i18n="icd_code">ICD code</label>
                 <input class="input" type="text" id="record_icd" name="record_icd"
                   placeholder="I10 (Essential hypertension)" />
               </div>
@@ -127,12 +127,12 @@
 
             <div class="two-cols">
               <div class="field">
-                <label for="record_diagnosis">Diagnosis</label>
+                <label for="record_diagnosis" data-i18n="diagnosis">Diagnosis</label>
                 <input class="input" type="text" id="record_diagnosis" name="record_diagnosis"
                   placeholder="Hypertension – uncontrolled" />
               </div>
               <div class="field">
-                <label for="record_plan">Plan</label>
+                <label for="record_plan" data-i18n="treatment_plan">Plan</label>
                 <input class="input" type="text" id="record_plan" name="record_plan"
                   placeholder="Adjust medication; follow-up in 3 months" />
               </div>
@@ -140,22 +140,22 @@
 
             <div class="two-cols">
               <div class="field">
-                <label for="record_bp">BP (mmHg)</label>
+                <label for="record_bp" data-i18n="bp">BP (mmHg)</label>
                 <input class="input" type="text" id="record_bp" name="record_bp" placeholder="130/85" />
               </div>
               <div class="field">
-                <label for="record_hr">Heart rate (bpm)</label>
+                <label for="record_hr" data-i18n="hr">Heart rate (bpm)</label>
                 <input class="input" type="number" id="record_hr" name="record_hr" placeholder="72" />
               </div>
             </div>
 
             <div class="two-cols">
               <div class="field">
-                <label for="record_bmi">BMI</label>
+                <label for="record_bmi" data-i18n="bmi">BMI</label>
                 <input class="input" type="number" step="0.1" id="record_bmi" name="record_bmi" placeholder="24.5" />
               </div>
               <div class="field">
-                <label for="record_type">Record type</label>
+                <label for="record_type" data-i18n="record_type">Record type</label>
                 <select id="record_type" name="record_type" class="input">
                   <option value="Clinical note">Clinical note</option>
                   <option value="Lab result">Lab result</option>
@@ -165,16 +165,16 @@
             </div>
 
             <div class="field">
-              <label for="record_summary">Summary</label>
+              <label for="record_summary" data-i18n="summary">Summary</label>
               <textarea id="record_summary" name="record_summary"
                 placeholder="Chief complaint, findings, and detailed plan."></textarea>
             </div>
 
             <div class="btn-row">
-              <button type="submit" class="btn btn-primary">
+              <button type="submit" class="btn btn-primary" data-i18n="save_record">
                 Save record
               </button>
-              <button type="button" class="btn btn-outline" id="clear-record-form">
+              <button type="button" class="btn btn-outline" id="clear-record-form" data-i18n="clear_form">
                 Clear form
               </button>
             </div>
@@ -189,7 +189,7 @@
       <!-- Right: Recent records + timeline summary -->
       <section>
         <div class="card">
-          <div class="card-header-flex"><h2>Recent health records</h2><span>Structured records for all patients.</span>
+          <div class="card-header-flex"><h2 data-i18n="recent_records">Recent health records</h2><span data-i18n="records_desc_all">Structured records for all patients.</span>
           </div>
           <div class="divider"></div>
 
@@ -197,12 +197,12 @@
             <table>
               <thead>
                 <tr>
-                  <th>#</th>
-                  <th>Employee</th>
-                  <th>ICD</th>
-                  <th>Diagnosis</th>
-                  <th>Type</th>
-                  <th>Created at</th>
+                  <th data-i18n="id">#</th>
+                  <th data-i18n="employee">Employee</th>
+                  <th data-i18n="icd_code">ICD</th>
+                  <th data-i18n="diagnosis">Diagnosis</th>
+                  <th data-i18n="type">Type</th>
+                  <th data-i18n="created_at">Created at</th>
                 </tr>
               </thead>
               <tbody id="record-tbody">
@@ -213,20 +213,20 @@
 
           <div class="summary-grid">
             <div class="summary-card">
-              <div class="summary-title">Records created today</div>
+              <div class="summary-title" data-i18n="records_today">Records created today</div>
               <div class="summary-value" id="summary-records-today">0</div>
-              <div class="summary-sub">Clinical notes, labs, prescriptions</div>
+              <div class="summary-sub" data-i18n="records_types_desc">Clinical notes, labs, prescriptions</div>
             </div>
             <div class="summary-card">
-              <div class="summary-title">Patients with active records</div>
+              <div class="summary-title" data-i18n="patients_with_active">Patients with active records</div>
               <div class="summary-value" id="summary-record-patients">0</div>
-              <div class="summary-sub">Distinct employees</div>
+              <div class="summary-sub" data-i18n="distinct_emp">Distinct employees</div>
             </div>
           </div>
         </div>
 
         <div class="card" style="margin-top:12px;">
-          <div class="card-header-flex"><h2>Patient timeline (demo)</h2><span>Merges visits and records chronologically for the selected employee.[web:209][web:211]</span>
+          <div class="card-header-flex"><h2 data-i18n="patient_timeline">Patient timeline (demo)</h2><span data-i18n="timeline_desc">Merges visits and records chronologically for the selected employee.[web:209][web:211]</span>
           </div>
           <div class="divider"></div>
 
@@ -242,7 +242,7 @@
       </section>
     </div>
 
-    <div class="footer-text">
+    <div class="footer-text" data-i18n="footer_advanced">
       Demo advanced doctor UI – add real data and consent checks before showing patient details.
     </div>
 
@@ -295,6 +295,7 @@
     </aside>
   </main>
 
+  <script src="language-engine.js"></script>
   <script>
     // Auth Check
     const token = localStorage.getItem('token');
@@ -304,6 +305,9 @@
     }
 
     document.getElementById('doc-name').innerHTML = `Logged in as: <strong>Dr. ${user.name}</strong><br />`;
+    if (user.organization) {
+      document.getElementById('doc-hospital-name').textContent = `On duty · ${user.organization}`;
+    }
 
     let patients = [];
     let records = [];
@@ -390,10 +394,12 @@
         patientTbody.appendChild(tr);
       });
 
-      patientCountLabel.textContent =
-        patients.length === 1
-          ? "1 patient in network"
-          : patients.length + " patients in network";
+      if (patientCountLabel) {
+        patientCountLabel.textContent =
+          patients.length === 1
+            ? "1 patient in network"
+            : patients.length + " patients in network";
+      }
 
       buildTimeline();
     }

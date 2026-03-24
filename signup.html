@@ -4,8 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sign up · Employee Health Connect</title>
+  <title>Sign up · MigrantConnect</title>
+  <link rel="icon" href="logo.png" type="image/png" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="language-engine.js" defer></script>
+  <script src="ai-assistant.js" defer></script>
 </head>
 
 <body class="auth-body">
@@ -13,49 +16,49 @@
     <div class="left-panel">
       <div class="logo-row">
         <div class="logo">
-          <div class="logo-mark">EH</div>
-          <span>Employee Health Connect</span>
+          <div class="logo-mark">MC</div>
+          <span>MigrantConnect</span>
         </div>
-        <a class="logo-link" href="index.html">Back to home</a>
+        <a class="logo-link" href="index.html" data-i18n="back_to_home">Back to home</a>
       </div>
 
       <div class="welcome-block">
         <div class="welcome-pill">
           <span class="welcome-dot"></span>
-          Create your organization account
+          <span data-i18n="signup_pill">Create your organization account</span>
         </div>
-        <h1>Onboard your company or hospital in a few steps</h1>
-        <p>
+        <h1 data-i18n="signup_welcome_title">Onboard your company or hospital in a few steps</h1>
+        <p data-i18n="signup_welcome_desc">
           Choose your role, add basic organization details, and start managing employee health data with secure access
           for hospitals and doctors.
         </p>
       </div>
 
       <div class="badge-row">
-        <span class="badge">Multi-role signup</span>
-        <span class="badge">Organization profiles</span>
-        <span class="badge">Secure access</span>
+        <span class="badge" data-i18n="signup_badge_multi">Multi-role signup</span>
+        <span class="badge" data-i18n="signup_badge_profiles">Organization profiles</span>
+        <span class="badge" data-i18n="signup_badge_secure">Secure access</span>
       </div>
 
       <div class="steps-card">
-        <div class="steps-title">What happens next?</div>
+        <div class="steps-title" data-i18n="signup_steps_title">What happens next?</div>
         <ul class="steps-list">
           <li>
             <span class="steps-badge">1</span>
-            <span>Verify your email and organization details.</span>
+            <span data-i18n="signup_step_1">Verify your email and organization details.</span>
           </li>
           <li>
             <span class="steps-badge">2</span>
-            <span>Create employee or doctor profiles.</span>
+            <span data-i18n="signup_step_2">Create employee or doctor profiles.</span>
           </li>
           <li>
             <span class="steps-badge">3</span>
-            <span>Start recording and sharing health data.</span>
+            <span data-i18n="signup_step_3">Start recording and sharing health data.</span>
           </li>
         </ul>
       </div>
 
-      <div class="side-illustration">
+      <div class="side-illustration" data-i18n="signup_illustration">
         Add a soft medical illustration here to keep the signup experience friendly and aligned with your hospital
         theme.
       </div>
@@ -64,91 +67,93 @@
     <div class="right-panel">
       <div class="auth-card">
         <div class="card-header" style="text-align: center;">
-          <h2>Create an account</h2>
-          <p>Sign up as a company admin, hospital admin, or doctor to get started.</p>
+          <h2 data-i18n="signup_title">Create an account</h2>
+          <p data-i18n="signup_subtitle">Sign up as a company admin, hospital admin, or doctor to get started.</p>
         </div>
 
-        <div class="error-text" id="signup-error">
+        <div class="error-text" id="signup-error" data-i18n="signup_error_fill">
           Please fill all required fields and accept the terms.
         </div>
 
         <form action="/signup" method="POST">
           <div class="field">
-            <label for="role">Sign up as</label>
+            <label for="role" data-i18n="signup_role">Sign up as</label>
             <select id="role" name="role" required>
-              <option value="">Select a role</option>
-              <option value="company_admin">Company admin</option>
-              <option value="hospital_admin">Hospital admin</option>
-              <option value="doctor">Doctor</option>
+              <option value="" data-i18n="select_role">Select a role</option>
+              <option value="company_admin" data-i18n="signup_company">Company admin</option>
+              <option value="hospital_admin" data-i18n="signup_hospital">Hospital admin</option>
+              <option value="doctor" data-i18n="role_doctor">Doctor</option>
+              <option value="employee" data-i18n="signup_worker">Migrant Employee</option>
             </select>
           </div>
 
           <div class="two-cols">
             <div class="field">
-              <label for="first_name">First name</label>
-              <input class="input" type="text" id="first_name" name="first_name" placeholder="John" required />
+              <label for="first_name" data-i18n="signup_fname">First name</label>
+              <input class="input" type="text" id="first_name" name="first_name" placeholder="John" data-i18n-placeholder="signup_fname_placeholder" required />
             </div>
             <div class="field">
-              <label for="last_name">Last name</label>
-              <input class="input" type="text" id="last_name" name="last_name" placeholder="Doe" required />
+              <label for="last_name" data-i18n="signup_lname">Last name</label>
+              <input class="input" type="text" id="last_name" name="last_name" placeholder="Doe" data-i18n-placeholder="signup_lname_placeholder" required />
             </div>
           </div>
 
           <div class="field">
-            <label for="email">Work email</label>
-            <input class="input" type="email" id="email" name="email" placeholder="you@organization.com" required />
+            <label for="email" data-i18n="login_email">Work email</label>
+            <input class="input" type="email" id="email" name="email" placeholder="you@organization.com" data-i18n-placeholder="signup_email_placeholder" required />
           </div>
 
           <div class="field">
-            <label for="org_name">Organization / Hospital name</label>
-            <input class="input" type="text" id="org_name" name="org_name" placeholder="Acme Corp Hospital" required />
+            <label for="org_name" data-i18n="signup_org">Organization / Hospital name</label>
+            <input class="input" type="text" id="org_name" name="org_name" placeholder="Acme Corp Hospital" data-i18n-placeholder="signup_org_placeholder" required />
           </div>
 
           <div class="field">
-            <label for="password">Password</label>
-            <input class="input" type="password" id="password" name="password" placeholder="Create a strong password"
+            <label for="password" data-i18n="login_password">Password</label>
+            <input class="input" type="password" id="password" name="password" placeholder="Create a strong password" data-i18n-placeholder="signup_password_placeholder"
               required />
           </div>
 
           <div class="field">
-            <label for="confirm_password">Confirm password</label>
+            <label for="confirm_password" data-i18n="signup_confirm">Confirm password</label>
             <input class="input" type="password" id="confirm_password" name="confirm_password"
-              placeholder="Re-enter password" required />
+              placeholder="Re-enter password" data-i18n-placeholder="signup_confirm_placeholder" required />
           </div>
 
           <div class="field">
-            <label for="notes">Additional details (optional)</label>
-            <textarea id="notes" name="notes"
+            <label for="notes" data-i18n="signup_notes">Additional details (optional)</label>
+            <span class="sr-only" data-i18n="signup_notes_placeholder">E.g., number of employees, departments, or your primary use case.</span>
+            <textarea id="notes" name="notes" data-i18n-placeholder="signup_notes_placeholder"
               placeholder="E.g., number of employees, departments, or your primary use case."></textarea>
           </div>
 
           <div class="helper-row">
             <div class="checkbox-row">
               <input type="checkbox" id="terms" name="terms" required />
-              <label for="terms" style="margin-bottom:0;">
+              <label for="terms" style="margin-bottom:0;" data-i18n="signup_agree">
                 I agree to the privacy policy and terms of service.
               </label>
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block">
+          <button type="submit" class="btn btn-primary btn-block" data-i18n="signup_btn">
             Create account
           </button>
 
           <div class="divider">
             <span></span>
-            Already registered?
+            <span data-i18n="signup_have_account">Already registered?</span>
             <span></span>
           </div>
 
           <button type="button" class="btn btn-outline btn-block"
-            onclick="location.href='index.html'">
+            onclick="location.href='index.html'" data-i18n="signup_login">
             Go to sign in
           </button>
         </form>
 
         <div class="card-footer">
-          Need help with onboarding? <a href="#" class="link">Contact support</a>
+          <span data-i18n="signup_help">Need help with onboarding?</span> <a href="#" class="link" data-i18n="contact_support">Contact support</a>
         </div>
       </div>
     </div>
@@ -172,15 +177,17 @@
 
       const roleMap = {
         'company_admin': 'company',
-        'hospital_admin': 'company', // Currently simplifying to company role
-        'doctor': 'doctor'
+        'hospital_admin': 'hospital', 
+        'doctor': 'doctor',
+        'employee': 'employee'
       };
 
       const data = {
         name: form.first_name.value + ' ' + form.last_name.value,
         email: form.email.value,
         password: password,
-        role: roleMap[form.role.value] || 'worker'
+        role: roleMap[form.role.value] || 'worker',
+        organization: form.org_name.value
       };
 
       try {

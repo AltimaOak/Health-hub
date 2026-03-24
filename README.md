@@ -1,4 +1,4 @@
-# Employee-Health-Hub
+# MigrantConnect
 🌍 MigrantConnect
 
 A Unified Digital Platform for Migrant Worker Inclusion
@@ -77,10 +77,10 @@ Each module is designed to be scalable, secure, and cloud-ready.
 - Preferred language
 - Portable identity across regions
 
-🌐 Multilingual Support
-- Language-friendly UI
-- Designed for low digital literacy
-- Extendable to voice-based navigation
+🌐 Multilingual AI Assistant (NEW)
+- **Voice & Chat**: Interactive assistant with Speech-to-Text and Text-to-Speech.
+- **Powered by Gemini**: Uses Google's Gemini-1.5-Flash for intelligent, multilingual support.
+- **Proactive Help**: Guidance on health, policies, and system navigation.
 
 🏛 Policy & Welfare Hub
 - Personalized government scheme suggestions
@@ -103,55 +103,79 @@ Each module is designed to be scalable, secure, and cloud-ready.
 🛠️ Technology Stack (Prototype)
 
 Frontend
-- HTML5
-- CSS3 (Professional, responsive UI)
+- HTML5 / CSS3 (Tailwind CSS)
 - Vanilla JavaScript
+- **Web Speech API**: For real-time voice recognition and synthesis.
 
-Backend (Conceptual for Prototype)
-- Cloud-based storage
-- Secure APIs
-- Extendable to Microsoft Azure services
-
-Cloud & AI (Planned)
-- Azure Translator & Speech Services
-- Azure Health Data Services
-- Azure App Services
+Backend
+- **Python & Flask**: High-performance backend server.
+- **Google Gemini AI**: Multilingual LLM for the AI assistant.
+- **Firebase Realtime Database**: Primary cloud data store.
+- **PyJWT**: Secure token-based authentication.
 
 ---
 
 📁 Project Structure
 
 ```text
-migrant-platform/
+Employee-Health-Hub/
 │
-├── index.html        # Main application entry point
-├── css/
-│   └── style.css     # UI styling
-├── js/
-│   ├── data.js       # Sample policies & medical data
-│   └── app.js        # Application logic
-└── assets/           # Icons & resources (optional)
+├── app.py              # Main Python/Flask Backend
+├── ai-assistant.js     # AI Assistant Widget (Voice & Chat)
+├── requirements.txt    # Python Dependencies
+├── .env.python         # AI & Database Credentials
+├── venv/               # Python Virtual Environment
+│
+├── index.html          # Main application entry point
+├── signin.html         # Secure Multi-role Sign-in
+├── employee.html       # Patient/Worker Portal
+├── hospital.html       # Hospital Management Portal
+├── company.html        # Company Admin Dashboard
+└── styles.css          # Global UI styling
 ```
 
 ---
 
 ▶️ How to Run the Project
 
-1. Clone or download the repository
-2. Open the project folder in your terminal
-3. Run `npm install` to install backend dependencies
-4. Create a `.env` file in the root directory (refer to any provided environment variable templates or database configurations)
-5. Start the backend server by running `npm start`
-6. Open your web browser and navigate to `http://localhost:5000` to view the application
-7. Navigate through Dashboard, Policies, and Medical Records
+### 1. Prerequisites
+- Python 3.10 or higher
+- `pip` (Python package manager)
+
+### 2. Setup the Backend
+1. Clone or download the repository.
+2. Open the project folder in your terminal.
+3. Create a virtual environment:
+   ```bash
+   python -m venv venv
+   ```
+4. Activate the virtual environment:
+   - **Windows**: `.\venv\Scripts\activate`
+   - **macOS/Linux**: `source venv/bin/activate`
+5. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+6. Ensure `.env.python` contains your `GEMINI_API_KEY`.
+
+### 3. Start the Application
+1. Run the Flask server:
+   ```bash
+   python app.py
+   ```
+2. The server will start on `http://localhost:5000`.
+
+### 4. Access the Frontend
+1. Open your web browser and navigate to `http://localhost:5000`.
+2. All HTML files are served centrally by the Flask app.
+3. Interact with the **AI Assistant** using the floating chat icon on the bottom right.
 
 ---
 
 🌱 Future Enhancements
 
-- Voice-based navigation for low-literacy users
 - Role-based authentication (Worker / Doctor / Admin)
-- Real-time policy updates via APIs
-- Secure cloud database integration
-- Mobile application support
+- Real-time policy updates via government APIs
+- Secure cloud database integration for all users
+- Mobile application support (iOS/Android)
 - NGO and government analytics dashboards

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Portal · MigrantConnect</title>
+    <link rel="icon" href="logo.png" type="image/png" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="language-engine.js" defer></script>
+    <script src="ai-assistant.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); }
+        .sidebar { background: #0d2a29; }
+        .nav-link:hover { background: rgba(20, 184, 166, 0.1); color: #14b8a6; }
+        .nav-link.active { background: rgba(20, 184, 166, 0.2); color: #14b8a6; border-left: 4px solid #14b8a6; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <aside class="w-64 sidebar text-white hidden md:flex flex-col">
+        <div class="p-6 flex items-center gap-3">
+            <div class="w-10 h-10 bg-teal-500 rounded-lg flex items-center justify-center font-bold text-xl text-white">MC</div>
+            <span class="font-bold text-lg tracking-tight">MigrantConnect</span>
+        </div>
+        
+        <nav class="flex-1 px-4 py-4 space-y-2">
+            <a href="#" class="nav-link active flex items-center gap-3 p-3 rounded-xl transition-all" data-i18n="nav_dashboard">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                Dashboard
+            </a>
+            <a href="#" class="nav-link flex items-center gap-3 p-3 rounded-xl transition-all opacity-70" data-i18n="nav_health_records">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                Health Records
+            </a>
+            <a href="#" class="nav-link flex items-center gap-3 p-3 rounded-xl transition-all opacity-70" data-i18n="nav_welfare_schemes">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+                Welfare Schemes
+            </a>
+            <a href="#" class="nav-link flex items-center gap-3 p-3 rounded-xl transition-all opacity-70 text-orange-400" data-i18n="emergency_sos">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.876c1.11 0 1.808-1.205 1.246-2.164L13.246 4.164c-0.563-0.96-1.93-0.96-2.492 0L3.246 14.836C2.684 15.795 3.382 17 4.492 17z"></path></svg>
+                Emergency SOS
+            </a>
+        </nav>
+
+        <div class="p-4 border-t border-teal-800/50">
+            <div class="flex items-center gap-3 p-2 bg-teal-900/50 rounded-xl">
+                <div class="w-8 h-8 rounded-full bg-teal-500 flex items-center justify-center font-bold text-xs uppercase" id="user-initials">EW</div>
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-medium truncate" id="user-name">Employee User</p>
+                    <p class="text-xs text-teal-400 truncate">Migrant Worker</p>
+                </div>
+            </div>
+            <button onclick="logout()" class="w-full mt-4 flex items-center gap-2 p-2 text-sm text-red-400 hover:text-red-300 transition-colors" data-i18n="sign_out">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                Sign out
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
+        <!-- Header -->
+        <header class="h-20 bg-white border-b border-slate-200 px-8 flex items-center justify-between sticky top-0 z-10">
+            <div>
+                <h1 class="text-xl font-bold text-slate-900" data-i18n="worker_dashboard">Worker Dashboard</h1>
+                <p class="text-sm text-slate-500"><span data-i18n="welcome_back">Welcome back</span>, <span id="welcome-name">User</span></p>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-slate-50 relative">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                    <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="h-8 w-[1px] bg-slate-200 hidden sm:block"></div>
+                <div class="hidden sm:block">
+                    <p class="text-sm font-semibold text-slate-900" id="header-user-name">Employee User</p>
+                    <p class="text-xs text-slate-500" id="header-org-name">Company Name</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dynamic Content -->
+        <div class="p-8 space-y-8">
+            <!-- Health Passport Ribbon -->
+            <div class="bg-gradient-to-r from-teal-600 to-teal-800 rounded-3xl p-8 text-white shadow-xl flex flex-col md:flex-row gap-8 items-center overflow-hidden relative">
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
+                <div class="relative w-32 h-32 bg-white rounded-2xl flex items-center justify-center shadow-inner overflow-hidden border-4 border-teal-500/30">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=worker" alt="Avatar" class="w-full h-full object-cover">
+                </div>
+                <div class="relative flex-1">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="px-3 py-1 bg-white/20 rounded-full text-xs font-bold uppercase tracking-widest" data-i18n="health_passport_verified">Health Passport Verified</span>
+                        <span class="text-teal-300">•</span>
+                        <span class="text-sm opacity-80" id="passport-id">ID: MC-2026-8842</span>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-4" id="passport-name">Employee User</h2>
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="p-3 bg-white/10 rounded-2xl">
+                            <p class="text-xs opacity-70 mb-1" data-i18n="blood_group">Blood Group</p>
+                            <p class="text-xl font-bold">O Positive</p>
+                        </div>
+                        <div class="p-3 bg-white/10 rounded-2xl">
+                            <p class="text-xs opacity-70 mb-1" data-i18n="vaccination">Vaccination</p>
+                            <p class="text-xl font-bold" data-i18n="fully_vaccinated">Fully Vaccinated</p>
+                        </div>
+                        <div class="p-3 bg-white/10 rounded-2xl text-orange-200">
+                            <p class="text-xs opacity-70 mb-1" data-i18n="critical_allergy">Critical Allergy</p>
+                            <p class="text-xl font-bold">Penicillin</p>
+                        </div>
+                        <div class="p-3 bg-white/10 rounded-2xl">
+                            <p class="text-xs opacity-70 mb-1" data-i18n="insurance">Insurance</p>
+                            <p class="text-xl font-bold overflow-hidden text-ellipsis whitespace-nowrap">PM-JAY Active</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative w-full md:w-auto flex flex-col gap-4">
+                    <button class="bg-white text-teal-800 px-6 py-3 rounded-2xl font-bold flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors shadow-lg shadow-teal-900/40" data-i18n="digital_health_qr">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 17h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"></path></svg>
+                        Digital Health QR
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Left: Records and Welfare -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Medical Records -->
+                    <section class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-xl font-bold text-slate-900" data-i18n="recent_visits">Recent Medical Visits</h3>
+                            <button class="text-teal-600 font-semibold hover:underline text-sm" data-i18n="view_all">View All</button>
+                        </div>
+                        <div class="overflow-hidden border border-slate-100 rounded-2xl">
+                            <table class="w-full text-left">
+                                <thead class="bg-slate-50 border-b border-slate-100">
+                                    <tr>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest" data-i18n="table_date">Date</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest" data-i18n="table_hospital">Hospital</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest" data-i18n="table_reason">Reason</th>
+                                        <th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-widest" data-i18n="table_status">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-slate-100">
+                                    <tr class="hover:bg-slate-50 transition-colors group">
+                                        <td class="px-6 py-4 font-medium text-slate-700">Oct 12, 2025</td>
+                                        <td class="px-6 py-4 text-slate-600">City General Hospital</td>
+                                        <td class="px-6 py-4 text-slate-600">Routine Checkup</td>
+                                        <td class="px-6 py-4">
+                                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold" data-i18n="report_ready">Report Ready</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="hover:bg-slate-50 transition-colors group">
+                                        <td class="px-6 py-4 font-medium text-slate-700">Sep 05, 2025</td>
+                                        <td class="px-6 py-4 text-slate-600">Migrant Clinic #4</td>
+                                        <td class="px-6 py-4 text-slate-600">Flu Vaccination</td>
+                                        <td class="px-6 py-4">
+                                            <span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold" data-i18n="verified">Verified</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Welfare Schemes -->
+                    <section class="space-y-6">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xl font-bold text-slate-900" data-i18n="eligible_schemes">Your Eligible Welfare Schemes</h3>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div class="bg-white p-6 rounded-3xl border border-slate-200 hover:border-teal-500/50 transition-all cursor-pointer group shadow-sm">
+                                <div class="w-12 h-12 bg-teal-100 rounded-2xl flex items-center justify-center text-teal-600 mb-4 group-hover:bg-teal-600 group-hover:text-white transition-colors">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </div>
+                                <h4 class="font-bold text-slate-900 mb-2" data-i18n="ayushman_bharat">Ayushman Bharat</h4>
+                                <p class="text-sm text-slate-500 mb-4" data-i18n="ayushman_desc">You are currently covered under the national PM-JAY scheme for free tertiary care.</p>
+                                <div class="flex items-center gap-2 text-teal-600 font-bold text-xs uppercase tracking-wider">
+                                    <span data-i18n="active_membership">Active Membership</span>
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                </div>
+                            </div>
+                            <div class="bg-white p-6 rounded-3xl border border-slate-200 hover:border-orange-500/50 transition-all cursor-pointer group shadow-sm">
+                                <div class="w-12 h-12 bg-orange-100 rounded-2xl flex items-center justify-center text-orange-600 mb-4 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                                </div>
+                                <h4 class="font-bold text-slate-900 mb-2" data-i18n="one_nation_ration">One Nation Ration</h4>
+                                <p class="text-sm text-slate-500 mb-4" data-i18n="ration_desc">Access your monthly food subsidies from any Fair Price Shop in this state.</p>
+                                <button class="text-orange-600 font-bold text-xs uppercase tracking-wider" data-i18n="configure_location">Configure Location</button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Right: Appointments and Info -->
+                <aside class="space-y-8">
+                    <!-- Appointments -->
+                    <section class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4" data-i18n="upcoming_checkups">Upcoming Checkups</h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100">
+                                <div class="text-center">
+                                    <p class="text-xs font-bold text-slate-400 uppercase">Oct</p>
+                                    <p class="text-2xl font-bold text-teal-600Leading-none">28</p>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-slate-900 leading-tight">Post-Migration Screening</p>
+                                    <p class="text-xs text-slate-500">2:30 PM • Apollo Hospital</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100 opacity-60">
+                                <div class="text-center">
+                                    <p class="text-xs font-bold text-slate-400 uppercase">Nov</p>
+                                    <p class="text-2xl font-bold text-slate-400 Leading-none">15</p>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-bold text-slate-900 leading-tight">Annual Dental Visit</p>
+                                    <p class="text-xs text-slate-500">10:00 AM • Dental Central</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 py-3 border-2 border-dashed border-slate-200 rounded-2xl text-slate-500 font-semibold hover:border-teal-500 hover:text-teal-600 transition-all text-sm" data-i18n="book_appointment">
+                            + Book New Appointment
+                        </button>
+                    </section>
+
+                    <!-- Emergency Module -->
+                    <section class="bg-orange-600 rounded-3xl p-6 text-white shadow-xl shadow-orange-600/20">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.876c1.11 0 1.808-1.205 1.246-2.164L13.246 4.164c-0.563-0.96-1.93-0.96-2.492 0L3.246 14.836C2.684 15.795 3.382 17 4.492 17z"></path></svg>
+                            </div>
+                            <h3 class="text-lg font-bold" data-i18n="emergency_sos">Emergency SOS</h3>
+                        </div>
+                        <p class="text-sm border-l-2 border-white/30 pl-3 mb-6 opacity-90 leading-relaxed" data-i18n="emergency_desc">
+                            Need help? Click for immediate assistance at your current location.
+                        </p>
+                        <button class="w-full bg-white text-orange-600 py-3 rounded-2xl font-extrabold text-lg flex items-center justify-center gap-2 hover:bg-slate-50 transition-colors" data-i18n="activate_sos">
+                            <span class="animate-pulse w-2 h-2 bg-red-600 rounded-full"></span>
+                            ACTIVATE SOS
+                        </button>
+                        <div class="mt-6 pt-6 border-t border-white/20">
+                            <p class="text-xs opacity-70 mb-1" data-i18n="emergency_contact_label">Company Emergency Contact</p>
+                            <p class="font-bold">+91 98765 43210</p>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="p-8 text-center text-slate-400 text-sm mt-auto border-t border-slate-100">
+            &copy; 2026 MigrantConnect • Built for Migrant Workers • v1.0.0
+        </footer>
+    </main>
+
+    <script>
+        // Check authentication
+        const userStr = localStorage.getItem('user');
+        const token = localStorage.getItem('token');
+
+        if (!userStr || !token) {
+            window.location.href = 'index.html';
+        }
+
+        const user = JSON.parse(userStr);
+        
+        // Populate user data
+        document.getElementById('user-name').textContent = user.name;
+        document.getElementById('welcome-name').textContent = user.name.split(' ')[0];
+        document.getElementById('header-user-name').textContent = user.name;
+        document.getElementById('header-org-name').textContent = user.organization || 'MigrantConnect Partner';
+        document.getElementById('passport-name').textContent = user.name;
+        document.getElementById('user-initials').textContent = user.name.split(' ').map(n => n[0]).join('').toUpperCase();
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
